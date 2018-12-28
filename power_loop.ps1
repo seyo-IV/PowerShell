@@ -17,7 +17,7 @@ cls
 do{
 # IF is yes clear console
 if($swap -eq "Y"){cls}
-$URDC = "EGVDC03" #change this to your domain controller
+$URDC = "YOURDC01" #change this to your domain controller
 "`
  Wellcome 	[" + $env:Username + "]"
 "        ___           ___           ___          _____             
