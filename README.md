@@ -11,3 +11,6 @@ $URDC to your Domain Controller
 -SearchBase to your search base (like OU=OUsname,DC=example,DC=com)
 
 $Path to your export path.
+
+Modules required:
+Windows Powershell Active Directory Module
