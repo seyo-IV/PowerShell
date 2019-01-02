@@ -98,7 +98,7 @@ sleep -sec 2
         {
 
 #------------------------------------------------------------------------ 
-# Get AD-User Properties 
+# Set AD-User Properties 
 #------------------------------------------------------------------------
         Get-ADUser -Identity $sam -Properties * | select Mail, extensionattribute15, Company, Office, Manager, Department, OfficePhone
 		sleep -sec 2
