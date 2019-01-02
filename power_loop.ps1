@@ -136,10 +136,10 @@ do{
 #------------------------------------------------------------------------
             $nameou = read-host "Ziel OU eingeben"
 			# Searching for OU based on DistinguishedName
-            $sou  = (Get-ADOrganizationalUnit -LDAPFilter "(name=$nameou*)" -SearchBase 'OU=User,DC=ad,DC=erzbistum-koeln,DC=de').DistinguishedName
+            $sou  = (Get-ADOrganizationalUnit -LDAPFilter "(name=$nameou*)" -SearchBase 'OU=User,DC=example,DC=com').DistinguishedName #<-- Change this to your OU SearchBase
             write-host "[INFO] `t [$sou] was found." -ForegroundColor Yellow # -NoNewline;
 			# Confirm of the right OU
-            $test = read-host "Bestätigen sie die richtigkeit der angezeichgten OU mit 'Y'`n $"
+            $test = read-host "Please confirm the OU with 'Y'`n $"
             If($test -eq "y"){$end = $true}else{$end = $false}
             }until($end -eq $true)
 			
@@ -149,7 +149,7 @@ do{
             $gou  = (Get-ADUser -Identity $sam).DistinguishedName
 			# Move AD-User to new OU
             $mou  = Move-ADObject -Identity $gou -TargetPath $sou
-            write-host "Benutzer $sam wurde in die OU $sou verschoben"
+            write-host "User $sam moved to OU $sou"
         }
     if($switch2 -eq "2")
         {
@@ -186,17 +186,17 @@ do{
 #------------------------------------------------------------------------ 
 # Setting up variables 
 #------------------------------------------------------------------------
-		$status         = switch(Read-Host "Zu änderndes Attribut auswählen: `
-    1 Raum NR `
-    2 Telefon NR `
+		$status         = switch(Read-Host "Which attribute to change: `
+    1 Room NR `
+    2 Tel NR `
     3 Manager `
-    4 Abteilung
-    5 Firma `
+    4 Department
+    5 Firm `
     6 Extension Attriute15 `
-    7 Vorname `
-    8 Nachname `
-    9 Anzeigename `
-    Mit der entsprechenden Zahl auswählen und mit ENTER bestätigen") 
+    7 Givenname `
+    8 Surname `
+    9 Displayname `
+    Choose a number an press enter") 
     {
 	
 #------------------------------------------------------------------------ 
@@ -205,29 +205,29 @@ do{
     1 {$Office = Read-Host "Office"
         Set-ADUser -Identity $sam -Office $Office 
         }
-    2 {$phone = Read-Host "Telefon NR"
+    2 {$phone = Read-Host "Tel NR"
         Set-ADUser -Identity $sam -OfficePhone $phone
         }
     3 { $manager = Read-Host "Manager"
         Set-ADUser -Identity $sam -manager $manager
         }
-    4 { $department = Read-Host "Abteilung"
+    4 { $department = Read-Host "Department"
         Set-ADUser -Identity $sam -Department $department
         }
-    5 { $company = Read-Host "Firma"
+    5 { $company = Read-Host "Firm"
         Set-ADUser -Identity $sam -Company $company
         }
     6 { $ExAttr = Read-Host "ExtnsionAttribute 15"
         Set-ADUser -Identity $sam -Clear ExtensionAttribute15
 		Set-ADUser -Identity $sam -replace @{ExtensionAttribute15=$ExAttr}
         }
-    7 { $surname = Read-Host "Vorname"
+    7 { $surname = Read-Host "Givenname"
         Set-ADUser -Identity $sam -Surname $surname
         }
-    8 { $givenname = Read-Host "Nachname"
+    8 { $givenname = Read-Host "Surname"
         Set-ADUser -Identity $sam -Givenname $givenname
         }
-    9 { $displayname = Read-Host "Anzeigename"
+    9 { $displayname = Read-Host "Displayname"
         Set-ADUser -Identity $sam -replace @{DisplayName=$displayname}
         }
     }
@@ -402,7 +402,7 @@ $error.clear()
 $Source = Read-Host "Name eingeben"
 $UOG	= Read-Host "User[u], Gruppe[g] oder Gruppe(MemeberOf)[gm] `
 [Choose option]"
-$Path   = "\\EGVFS02\IT$\ScriptRepository\Logs\Export\"
+$Path   = "\\Yourserver\share\"
 $log    = $path + $Source + ".log"
 $ErrorActionpreference = "SilentlyContinue"
 
@@ -477,7 +477,7 @@ $ErrorActionpreference = "SilentlyContinue"
 #------------------------------------------------------------------------
 
         $source = Read-Host "Source"
-$Path   = "\\EGVFS02\IT$\ScriptRepository\Logs\Export\"
+$Path   = "\\Yourserver\share\"
 $log    = $path + $Source + ".log"
 $ErrorActionpreference = "SilentlyContinue"
 
@@ -514,7 +514,7 @@ $ErrorActionpreference = "SilentlyContinue"
 #------------------------------------------------------------------------
 
         $source = Read-Host "Source"
-$Path   = "\\EGVFS02\IT$\ScriptRepository\Logs\Export\"
+$Path   = "\\Yourserver\share\"
 $log    = $path + $Source + ".log"
 $ErrorActionpreference = "SilentlyContinue"
 
