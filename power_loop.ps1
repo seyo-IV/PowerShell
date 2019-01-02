@@ -196,7 +196,7 @@ do{
     7 Givenname `
     8 Surname `
     9 Displayname `
-    Choose a number an press enter") 
+    Choose a number and press enter") 
     {
 	
 #------------------------------------------------------------------------ 
