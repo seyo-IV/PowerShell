@@ -1,6 +1,6 @@
 ###########################################################
 # AUTHOR  				: Sergiy Ivanov 
-# Original Author		: Victor Ashiedu
+# Original Author	: Victor Ashiedu
 # CREATED 				: 08-08-2014 
 # UPDATED 				: 12-02-2019 
 # COMMENT 				: This script exports Active Directory user
