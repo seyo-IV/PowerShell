@@ -36,7 +36,7 @@ Import-Module ActiveDirectory
 
 $SearchBase = "OU=User,DC=example,DC=com"
 
-
+$ErrorActionPreference = "SilentlyContinue"
 
 
 $AllADUsers = Get-ADUser  -searchbase $SearchBase -Filter * -Properties * #| Where-Object {$_.info -NE 'Migrated'} #ensures that updated users are never exported.
