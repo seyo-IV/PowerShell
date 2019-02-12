@@ -692,25 +692,8 @@ Foreach ($s in $servers)
 
 if($switch -ne "6")
 {
-$Title = "Info"
-$Info = "Are you done?"
- 
-$Options = [System.Management.Automation.Host.ChoiceDescription[]] @("&Yes", "&No")
-[int]$DefaultChoice = 0
-$Opt =  $host.UI.PromptForChoice($Title , $Info, $Options, $DefaultChoice)
-
-switch($Opt)
-{
-	0 { 
-		Write-Verbose -Message "Yes"
-        $swap = "Y"
-	}
-	
-	1 { 
-		Write-Verbose -Message "No" 
-        $swap = "N"
-	}
-}
-
+Write-Output -InputObject "Press any key to continue..."
+[void]$host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+Clear-Host
 }
 }until($switch -eq "6")
