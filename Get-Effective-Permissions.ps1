@@ -24,7 +24,7 @@ foreach($Dir in $PList)
         @($ItemizedDuplicates,$Singles) | Out-File $log -append
             foreach($Id in $AclList.IdentityReference.Value -replace 'Domain\\')
                 {
-                    if($ID -Like "*adminprefix*") # I had admin which had permissions on files, that way i avoid them
+                    if($ID -Like "*adminprefix*") # I had admins which had permissions on files, that way i avoid them
                         {
                         
                         }
