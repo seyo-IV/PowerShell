@@ -24,7 +24,7 @@ foreach($Dir in $PList)
         @($ItemizedDuplicates,$Singles) | Out-File $log -append
             foreach($Id in $AclList.IdentityReference.Value -replace 'Domain\\')
                 {
-                    if($ID -Like "*eckdadm*")
+                    if($ID -Like "*adminprefix*") # I had admin which had permissions on files, that way i avoid them
                         {
                         
                         }
@@ -36,13 +36,13 @@ foreach($Dir in $PList)
 ---------------------------------" | Out-File $Log -append
                     foreach ($Object in $ADGroup)
 		                {
-		                    $Group		= Get-ADUser -filter * -SearchBase "$Object"
-		                    if($Group -ne $null)
+		                    $GetUser		= Get-ADUser -filter * -SearchBase "$Object"
+		                    if($GetUser -ne $null)
                                 {
-                                    $GrName		= $Group.Name
-		                            Write-Output "$GrName" | Out-File $Log -append
+                                    $Name		= $GetUser.Name
+		                            Write-Output "$Name" | Out-File $Log -append
                                 }
 		                }
                         } 
                 }
-Clear-Variable Object, Group, ADGroup, ACLList, GRName, Id
+Clear-Variable Object, Group, ADGroup, ACLList, ACLFile, ACLGroup, Name, Id
