@@ -64,14 +64,14 @@ foreach($Dir in $PList)
         @($ItemizedDuplicates,$Singles) | Out-File $log -append
             foreach($Id in $AclList.IdentityReference.Value -replace 'DOMAINPREFIX\\')
                 {
-                    $idcheck = get-aduser $Id
+                    $idcheck = get-aduser $Id #ignore all users
                     if($IDcheck -eq $true)
                         {
                         
                         }
                     else
 {
-                        if($id -Like "*L_FS_DFS*")
+                        if($id -Like "*Local_Group_prefix*")
                                                     {
                     $GrName = (Get-ADGroup $id -Properties member | Select-Object -ExpandProperty member | %{Get-ADGroup $_}).name
                     $ADGroup = Get-ADGroup $GrName -Properties member | Select-Object -ExpandProperty member
