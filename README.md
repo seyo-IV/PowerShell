@@ -16,5 +16,5 @@ Modules required:
 Windows Powershell Active Directory Module
 
 
-To use Get-Effective_Permissions u need to alter $Path, the DOMAINPREFIX(thats the Domain\Name thing) and Local_Group_Prefix(If you are using Local and global groups from Mictosoft best practice) to suit your company standards. The module Active Direcotry is alse required.
-Same for Get-Effective-Permissions-HTML.
+To use Get-Effective-Permissions u need to alter $Path, the DOMAINPREFIX(thats the Domain\Name thing) and Local_Group_Prefix(If you are using local and global groups from Mictosoft best practice) to suit your company standards. The module Active Direcotry is also required.
+Same goes for Get-Effective-Permissions-HTML.
