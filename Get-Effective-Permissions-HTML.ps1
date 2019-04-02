@@ -81,7 +81,7 @@ foreach($Dir in $PList)
                    
                    
                     
-                    $UserL += Write-Output "Mitglieder von $Id :"
+                    $UserL += Write-Output "Member of $Id :"
 
                     foreach ($Object in $ADGroup)
 		                {
@@ -91,7 +91,6 @@ foreach($Dir in $PList)
 
                                     $Name	= $GetName.samaccountname
 		                            $UserL += $Name + " "
-                                    $x++
 
                                 }
                                 
@@ -110,7 +109,7 @@ foreach($Dir in $PList)
                     else{                
 
                     $UserL += Write-Output "
-                    Mitglieder von $Id :
+                    Member of $Id :
                     "
  
                     foreach ($Object in $ADGroup)
