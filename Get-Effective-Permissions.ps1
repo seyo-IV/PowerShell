@@ -67,7 +67,7 @@ foreach($Dir in $PList)
                         }
                     else
 {
-                        if($id -Like "*L_FS_DFS*")
+                        if($id -Like "*Local_Group_Prefix*")
                                                     {
                      $GrName = (Get-ADGroup $id -Properties member | Select-Object -ExpandProperty member | Select -first 1 | %{Get-ADGroup $_}).name
                     $ADGroup = Get-ADGroup $GrName -Properties member | Select-Object -ExpandProperty member
