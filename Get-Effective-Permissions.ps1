@@ -14,7 +14,7 @@
 import-module ActiveDirectory
 $i = 0
 $ErrorActionPreference = "SilentlyContinue"
-$Path                  = "\\Server\Logs\"
+$Path                  = "\\Server\Logs\" # alter this to your log path
 $log                  = $Path + "Effective_PermissionsV2" + ".log"
 $PPath                 = Read-Host "Enter Path to scan"
 $plist                 = @()
@@ -49,9 +49,9 @@ foreach($Dir in $PList)
 #------------------------------------------------------------------------ 
 # Collecting ACLs
 #------------------------------------------------------------------------
-        $AclList = Get-Acl -Path $Dir -Filter Access | Select-Object -ExpandProperty Access | Where-Object {$_.IdentityReference -like "Domain\*"} | Select-Object IdentityReference
+        $AclList = Get-Acl -Path $Dir -Filter Access | Select-Object -ExpandProperty Access | Where-Object {$_.IdentityReference -like "Domain\*"} | Select-Object IdentityReference # Alter Domain to your domain
         Clear-Variable ACLFile
-        $ACLFile = Get-Acl -Path $dir -Filter Access | Select-Object -ExpandProperty Access | Where-Object {$_.IdentityReference -like "Domain\*"} | Select-Object IdentityReference, FileSystemRights
+        $ACLFile = Get-Acl -Path $dir -Filter Access | Select-Object -ExpandProperty Access | Where-Object {$_.IdentityReference -like "Domain\*"} | Select-Object IdentityReference, FileSystemRights # Alter Domain to your domain
         $ACLGroup = $ACLFile | Group-Object IdentityReference
         $Singles = $ACLGroup.where({$_.count -eq 1}).group
         $Duplicates = $ACLGroup.where({$_.count -gt 1})
@@ -59,15 +59,15 @@ foreach($Dir in $PList)
         [pscustomobject][ordered]@{"IdentityReference"=$_.Group.IdentityReference[0]; "FileSystemRights" = $_.Group.FileSystemRights -join ", "}
             }
         @($ItemizedDuplicates,$Singles) | Out-File $log -append
-            foreach($Id in $AclList.IdentityReference.Value -replace 'Domain\\')
+            foreach($Id in $AclList.IdentityReference.Value -replace 'Domain\\') # alter this to your Domain
                 {
-                    if($ID -Like "*adminprefix*" -or $ID -like "*excluded_service_user*")
+                    if($ID -Like "*admin_prefix*" -or $ID -like "*excluded_service_user*") # our team is using admin prefixes(like companyadm-name)
                         {
                         
                         }
                     else
 {
-                        if($id -Like "*Local_Group_Prefix*")
+                        if($id -Like "*Local_Group_Prefix*") # Get Users of local groups of their global groups
                                                     {
                      $GrName = (Get-ADGroup $id -Properties member | Select-Object -ExpandProperty member | Select -first 1 | %{Get-ADGroup $_}).name
                     $ADGroup = Get-ADGroup $GrName -Properties member | Select-Object -ExpandProperty member
@@ -76,8 +76,8 @@ foreach($Dir in $PList)
                    
                     
 					Write-Host "`n" | Out-File $log -append
-                    Write-Output "Mitglieder von $Id : `n" | Out-File $log -append
-					$result = $id.length + 17
+                    Write-Output "Member of $Id : `n" | Out-File $log -append
+					$result = $id.length + 12
 					$test = "-"*$result
 					$test | Out-File $Log -Append
                     foreach ($Object in $ADGroup)
@@ -98,8 +98,8 @@ foreach($Dir in $PList)
 
                    
                     Write-Host "`n" | Out-File $log -append
-                    Write-Output "Mitglieder von $Id : `n" | Out-File $log -append
-					$result = $id.length + 17
+                    Write-Output "Member of $Id : `n" | Out-File $log -append
+					$result = $id.length + 12
 					$test = "-"*$result
 					$test | Out-File $Log -Append
                     foreach ($Object in $ADGroup)
