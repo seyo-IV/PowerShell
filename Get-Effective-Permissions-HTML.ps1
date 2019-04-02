@@ -1,3 +1,16 @@
+#------------------------------------------------------------------------ 
+# Author: Sergiy Ivanov (Im Auftrag der ECKD Service GmbH) 
+# Verwendungszweck:  This script generates effective permissions report and exports to html.
+# Datum: 20.03.2019 
+#------------------------------------------------------------------------ 
+# Errors  : Der Fehler bestand in? 
+# 
+# Changes : Folgendes wurde verändert 
+# 
+#------------------------------------------------------------------------ 
+# Variables 
+#------------------------------------------------------------------------ 
+
 $head = "<style>
 td {font-family:candara;width:100px; max-width:300px; background-color:white;}
 table {width:100%;}
@@ -10,7 +23,7 @@ p1 {font-family:candara;font-size:9pt}
 import-module ActiveDirectory
 $i = 0
 $ErrorActionPreference = "SilentlyContinue"
-$Path   = "\\SERVER\Logs\"
+$Path   = "\\Server\Logs\"
 $file    = $Path + "Effective_PermissionsV2" + ".html"
 $PPath = Read-Host "Enter Path to scan"
 $PList = @()
@@ -59,10 +72,10 @@ foreach($Dir in $PList)
 
                     else
                         {
-                        if($id -Like "*Local_Group_prefix*")
+                        if($id -Like "*Local_Group_Prefix*")
                         {
                     
-                    $GrName = (Get-ADGroup $id -Properties member | Select-Object -ExpandProperty member | %{Get-ADGroup $_}).name
+                    $GrName = (Get-ADGroup $id -Properties member | Select-Object -ExpandProperty member | %{Get-ADGroup $_}).name | Select-Object -first 1
                     $ADGroup = Get-ADGroup $GrName -Properties member | Select-Object -ExpandProperty member
                    
                    
@@ -84,8 +97,7 @@ foreach($Dir in $PList)
                                 
                                 
 		                }
-                        $UserList += "
-						"
+
                         }else{
 
                     $error.clear()
@@ -116,8 +128,7 @@ foreach($Dir in $PList)
                                 
 		                }
                         }
-                           $UserL += "
-                           "
+
                            }
                         }
 
@@ -143,10 +154,9 @@ $row | Add-Member -MemberType NoteProperty -Name "ACL" -Value $acl
 $row | Add-Member -MemberType NoteProperty -Name "User" -Value $userlist
 $data    += $row
 $alldata += $data 
-  $i++
+ 
   Write-Progress -Activity “Scaning folders” -Status “On $dir” -PercentComplete ($i / $plist.count*100)
-Get-Variable -Exclude alldata, ErrorActionPreference, Plist, Path, i, file, head | Remove-Variable -EA 0
-
+  $i++
    }
 Write-host "[INFO]    Exporting List to $file" -ForegroundColor yellow
 $alldata | select path, acl, user | ConvertTo-Html -Head $head -PreContent "<h1>Effective Permissions</h1>" | Out-File $file
