@@ -8,9 +8,7 @@
  
 # ERROR REPORTING ALL 
 
-$Path = read-host "Enter full path `
-[WORKS ONLY WITH LOCAL OR NETWORK DRIVES] `
------ [A REMOTE ADRESS WORNT WORK] -----"
+$Path = read-host "Enter full path"
 
 $ErrorActionPreference = "SilentlyContinue"
 $Folders = $Path -Split "\\"
