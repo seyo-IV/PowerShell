@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------ 
 # Author: Sergiy Ivanov (Im Auftrag der ECKD Service GmbH) 
 # Verwendungszweck: Dieses Script generiert Listen mit effecktiven berechtigungen. 
-# Datum: 20.03.2019 
+# Datum: 15.04.2019 
 #------------------------------------------------------------------------ 
 # Errors  : Verschachtelte Gruppen wurde nicht berücksichtigt. 
 # 
@@ -22,7 +22,7 @@ $pathfinder 		   = $pathfinder | Select-Object -Last 1
 $Folders               = $PPath -Split "\\"
 $PathList	           = $Folders | % { $i = 0 } { $Folders[0..$i] -Join "\" -Replace ":$", ":\"; $i++ }
 $Plist 				  += $pathlist
-$Path                  = "\\SERVER\PATH\Logs\"
+$Path                  = "\\server\path\Logs\"
 $log                   = $Path + "Effective_PermissionsV3_" + $Pathfinder + ".log"
 if($TestPath -eq $false)
 {
@@ -53,9 +53,9 @@ foreach($Dir in $PList)
 #------------------------------------------------------------------------ 
 # Collecting ACLs
 #------------------------------------------------------------------------
-        $AclList 			= Get-Acl -Path $Dir -Filter Access | Select-Object -ExpandProperty Access | Where-Object {$_.IdentityReference -like "Domainprefix\*"} | Select-Object IdentityReference
+        $AclList 			= Get-Acl -Path $Dir -Filter Access | Select-Object -ExpandProperty Access | Where-Object {$_.IdentityReference -like "Domain\*"} | Select-Object IdentityReference
         Clear-Variable ACLFile
-        $ACLFile			= Get-Acl -Path $dir -Filter Access | Select-Object -ExpandProperty Access | Where-Object {$_.IdentityReference -like "Domainprefix\*"} | Select-Object IdentityReference, FileSystemRights
+        $ACLFile			= Get-Acl -Path $dir -Filter Access | Select-Object -ExpandProperty Access | Where-Object {$_.IdentityReference -like "Domain\*"} | Select-Object IdentityReference, FileSystemRights
         $ACLGroup 			= $ACLFile | Group-Object IdentityReference
         $Singles 			= $ACLGroup.where({$_.count -eq 1}).group
         $Duplicates 		= $ACLGroup.where({$_.count -gt 1})
@@ -63,7 +63,7 @@ foreach($Dir in $PList)
         [pscustomobject][ordered]@{"IdentityReference"=$_.Group.IdentityReference[0]; "FileSystemRights" = $_.Group.FileSystemRights -join ", "}
             }
         @($ItemizedDuplicates,$Singles) | Out-File $log -append
-            foreach($Id in $AclList.IdentityReference.Value -replace 'Domainprefix\\')
+            foreach($Id in $AclList.IdentityReference.Value -replace 'Domain\\')
                 {	
 				try{$idcheck = get-aduser -identity $id}catch{$idcheck = get-adgroup -identity $id}
 				sleep -sec 1
@@ -73,7 +73,7 @@ foreach($Dir in $PList)
                         }
                     else
 {
-                        if($id -Like "*LocalGroupPrefix*")
+                        if($id -Like "*Local_Group_Prefix*")
                                                     {
                     $GrName  = (Get-ADGroup $id -Properties member | Select-Object -ExpandProperty member | Select -first 1 | %{Get-ADGroup $_}).name
                     $ADGroup = Get-ADGroup $GrName -Properties member | Select-Object -ExpandProperty member
@@ -82,8 +82,8 @@ foreach($Dir in $PList)
                    
                     
 					Write-Host "`n" | Out-File $log -append
-                    Write-Output "Member of $Id : `n" | Out-File $log -append
-					$result = $id.length + 12
+                    Write-Output "Mitglieder von $Id : `n" | Out-File $log -append
+					$result = $id.length + 17
 					$test 	= "-"*$result
 					$test | Out-File $Log -Append
                     foreach ($Object in $ADGroup)
@@ -113,8 +113,8 @@ foreach($Dir in $PList)
 
                     
                     Write-Host "`n" | Out-File $log -append
-                    Write-Output "Member of $group : `n" | Out-File $log -append
-					$result = $group.length + 12
+                    Write-Output "Mitglieder von $group : `n" | Out-File $log -append
+					$result = $group.length + 17
 					$test 	= "-"*$result
 					$test | Out-File $Log -Append
                     foreach ($Object in $ADGroup)
@@ -142,8 +142,8 @@ foreach($Dir in $PList)
 
                    
                     Write-Host "`n" | Out-File $log -append
-                    Write-Output "Member of $Id : `n" | Out-File $log -append
-					$result = $id.length + 12
+                    Write-Output "Mitglieder von $Id : `n" | Out-File $log -append
+					$result = $id.length + 17
 					$test 	= "-"*$result
 					$test | Out-File $Log -Append
                     foreach ($Object in $ADGroup)
