@@ -13,7 +13,9 @@ $ErrorActionpreference = "SilentlyContinue"
 	$Count	= $ADUser.count
 	Write-Output "Totalcount $Count" | Out-File $log -append
 	Write-Output "$Source is member of" | Out-File $log -append
-	Write-Output "----------------------------------------------------"	| Out-File $log -append
+	$result = $source.length + 40
+	$test 	= "-"*$result
+	$test | Out-File $Log -Append
 	foreach ($Group in $ADUser)
 		{
 		$Gr			= Get-ADGroup -identity $Group
@@ -27,7 +29,9 @@ $ErrorActionpreference = "SilentlyContinue"
 	$Count	= $ADGroup.count
 	Write-Output "Totalcount $Count" | Out-File $log -append
 	Write-Output "The following user/groups are member of $Source" | Out-File $log -append
-	Write-Output "----------------------------------------------------" | Out-File $log -append
+	$result = $source.length + 40
+	$test 	= "-"*$result
+	$test | Out-File $Log -Append
 	foreach ($Obj in $ADGroup)
 		{
 		$error.clear()
@@ -47,7 +51,9 @@ $ErrorActionpreference = "SilentlyContinue"
 	$Count	= $ADGroupMemo.count
 	Write-Output "Totalcount $Count" | Out-File $log -append
 	Write-Output "The following groups are member of $Source" | Out-File $log -append
-	Write-Output "----------------------------------------------------" | Out-File $log -append
+	$result = $source.length + 40
+	$test 	= "-"*$result
+	$test | Out-File $Log -Append
 	foreach ($Groups in $ADGroupMemo)
 		{
 		$Gr01		= Get-ADGroup -identity $Groups
