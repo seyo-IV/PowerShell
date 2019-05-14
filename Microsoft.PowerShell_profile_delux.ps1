@@ -9,7 +9,8 @@ Catch
   Write-Host "[ERROR]`t  Module couldn't be loaded. Script will stop! $($_.Exception.Message)" 
   Exit 1 
 } 
-"Wellcome 	[" + $env:Username + "]"
+"Wellcome 	[" + $env:Username + "]
+Use Get-New-Alias to get new functions"
 	
 ### Finder function USER
 Function ufind-PowerShell {
@@ -93,3 +94,24 @@ $Flist | ft FullName, IdentityReference, FileSystemRights
 }
 
 Set-Alias -Name 'perm' -Value 'NTFSPerm-PowerShell'
+
+Function sfind-PowerShell {
+#$find		= Read-Host "Find"  
+param ( [string]$find)
+Get-ChildItem -recurse | Select-String -pattern $find | group path | select name
+}
+
+Set-Alias -Name 'sfind' -Value 'sfind-PowerShell'
+
+### Get-New-Alias
+Function New-Alias {
+Write-Host -ForegroundColor Yellow "New-Alias are:
+[  ufind  ] Find User by CN. Usage: ufind <name>`
+[  gfind  ] Find User by CN. Usage: gfind <name>`
+[  sfind  ] Find String in File. Usage: sfind <string>`
+[  perm   ] Read out NTFS permissions`
+[  pwgen  ] Password-Generator`
+[ scripts ] Change directory to \\EGVFS02\It$\ScriptRepository"
+}
+
+Set-Alias -Name 'Get-New-Alias' -Value 'New-Alias'
