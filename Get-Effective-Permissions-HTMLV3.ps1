@@ -4,7 +4,17 @@
 # Modules Required: ActiveDirectory and NTFSSecurity
 # Datum: 20.03.2019 
 #------------------------------------------------------------------------ 
-# 
+#requires -module ActiveDirectory, NTFSSecurity
+ <#
+ .SYNOPSIS
+ Generates an HTML-based permission report
+
+ .PARAMETER Path
+ Path to scan.
+
+ .EXAMPLE
+ .\Get-Effective-Permissions-HTMLV3.ps1 -Path \\SERVER\SHARE
+ #> 
 #------------------------------------------------------------------------ 
 # Variables 
 #------------------------------------------------------------------------ 
@@ -15,27 +25,31 @@ th {font-family:candara;font-size:14pt;background-color:grey;}
 h1 {font-family:candara;font-size:18pt}
 p1 {font-family:candara;font-size:9pt}
 </style>
-
 <title>Effective Permissions</title>"
-
+[CmdletBinding()]
+param(
+	[Parameter(Mandatory=$True,
+	ValueFromPipeline=$True,
+	ValueFromPipelineByPropertyName=$True)]
+	[string[]]$Path
+	)
 import-module ActiveDirectory
 Import-Module NTFSSecurity
 $ObjectList =  @()
 $i					   = 0
-$ErrorActionPreference = "SilentlyContinue"
-$PPath                 = Read-Host "Enter Path to scan"
-$plist                 = @()
-$pathfinder			   = $PPath -split "\\"
-$pathfinder 		   = $pathfinder | Select-Object -Last 1
-$Path                  = "\\SERVER\SHARE\Logs\"
-$file                   = $Path + "Effective_Permissions_" + $Pathfinder + ".html"
-$Folders               = $PPath -Split "\\"
-$PathList	           = $Folders | % { $i = 0 } { $Folders[0..$i] -Join "\" -Replace ":$", ":\"; $i++ }
-$Plist 				  += $pathlist
+$ErrorActionPreference 	= "SilentlyContinue"
+$plist                 	= @()
+$pathfinder		= $PPath -split "\\"
+$pathfinder 		= $pathfinder | Select-Object -Last 1
+$PPath                  = "\\SERVER\SHARE\Logs\"
+$file                   = $PPath + "Effective_Permissions_" + $Pathfinder + ".html"
+$Folders                = $Path -Split "\\"
+$PathList	        = $Folders | % { $i = 0 } { $Folders[0..$i] -Join "\" -Replace ":$", ":\"; $i++ }
+$Plist 			+= $pathlist
 Write-Progress -Activity “Scanning Directory” -Status “Scanning” -PercentComplete 50
 try
 {
-$list 	= Get-Childitem -Path $PPath -Recurse | ?{ $_.PSIsContainer } | Select-Object FullName
+$list 	= Get-Childitem -Path $Path -Recurse | ?{ $_.PSIsContainer } | Select-Object FullName
 $list 	= $list.fullname
 $Plist += $list
 }
