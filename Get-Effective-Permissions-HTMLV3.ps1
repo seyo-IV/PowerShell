@@ -145,7 +145,6 @@ foreach($Dir in $PList)
 $data     = @()
 $Account = $Account | Out-String
 $AccessRight = $AccessRight | Out-String
-$UserList += "<br />"
 $UserList = ($userlist | Out-String).Trim()
 
 
