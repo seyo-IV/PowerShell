@@ -31,7 +31,7 @@ param(
 	[Parameter(Mandatory=$True,
 	ValueFromPipeline=$True,
 	ValueFromPipelineByPropertyName=$True)]
-	[string[]]$Path
+	[string]$Path
 	)
 import-module ActiveDirectory
 Import-Module NTFSSecurity
@@ -159,7 +159,13 @@ foreach($Dir in $PList)
 $data     = @()
 $Account = $Account | Out-String
 $AccessRight = $AccessRight | Out-String
-$UserList = ($userlist | Out-String).Trim()
+$UserList = $UserList | Get-Unique
+$UserList = $UserList | ForEach-Object { 
+    if( $UserList.IndexOf($_) -eq ($UserList.count -1) ){
+        $_.replace(";","")
+    }else{$_}  
+}
+$UserList = $userlist | Out-String
 
 
 $list = New-Object PSCustomObject
@@ -174,4 +180,4 @@ $ObjectList += $data
 $i++
 }
 
-$ObjectList | ConvertTo-Html -Head $head -PreContent "<h1>Effective Permissions</h1>" | Out-File $file
+$ObjectList | ConvertTo-Html -As table -Head $head -PreContent "<h1>Effective Permissions</h1>" | Out-File $file
