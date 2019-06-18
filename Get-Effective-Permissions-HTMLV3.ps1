@@ -63,7 +63,6 @@ foreach($Dir in $PList)
     {
 	Write-Progress -Activity “Scanning folders” -Status “On $dir” -PercentComplete ($i / $plist.count*100)
 
-        Resolve-Path -Path $Dir
 #------------------------------------------------------------------------ 
 # Collecting ACLs
 #------------------------------------------------------------------------
