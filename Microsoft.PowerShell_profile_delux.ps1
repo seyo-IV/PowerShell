@@ -78,7 +78,7 @@ Set-Alias -Name 'pwgen' -Value 'pwgenerator-PowerShell'
 
 ### NTFS query function
 Function NTFSPerm-PowerShell {
-$Path = Read-Host "Path"
+param ( [string]$Path)
 $ErrorActionPreference = "SilentlyContinue"
 $Folders = $Path -Split "\\"
 $Plist	 = $Folders | % { $i = 0 } { $Folders[0..$i] -Join "\" -Replace ":$", ":\"; $i++ } 
@@ -104,7 +104,7 @@ Get-ChildItem -recurse | Select-String -pattern $find | group path | select name
 Set-Alias -Name 'sfind' -Value 'sfind-PowerShell'
 
 ### Get-New-Alias
-Function New-Alias {
+Function New-Aliases {
 Write-Host -ForegroundColor Yellow "New-Alias are:
 [  ufind  ] Find User by CN. Usage: ufind <name>`
 [  gfind  ] Find User by CN. Usage: gfind <name>`
@@ -114,4 +114,4 @@ Write-Host -ForegroundColor Yellow "New-Alias are:
 [ scripts ] Change directory to \\EGVFS02\It$\ScriptRepository"
 }
 
-Set-Alias -Name 'Get-New-Alias' -Value 'New-Alias'
+Set-Alias -Name 'Get-New-Alias' -Value 'New-Aliases'
