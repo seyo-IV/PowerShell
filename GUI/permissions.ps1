@@ -32,12 +32,8 @@ $Search.Add_Click({
     $Path = $FilePath.Text
 	$Results = @()
 	if($Path){
-	$Folders               = $Path -Split "\\"
-	$PathList	           = $Folders | % { $i = 0 } { $Folders[0..$i] -Join "\" -Replace ":$", ":\"; $i++ }
-	$Plist 				  += $Pathlist
-	$list 	= Get-Childitem -Path $Path -Recurse | ?{ $_.PSIsContainer } | Select-Object FullName
-	$list 	= $list.fullname
-	$Plist += $list
+	$Folders = $Path -Split "\\"
+	$Plist	 = $Folders | % { $i = 0 } { $Folders[0..$i] -Join "\" -Replace ":$", ":\"; $i++ }
 	foreach($Dir in $PList)
     {
 	if($dir -ne "\"){
