@@ -1,6 +1,17 @@
 # Powershell-Random-Scripts
 
-To use Get-Effective-Permissions-HTML u need to alter $Path, the DOMAINPREFIX(thats the Domain\Name thing) and Local_Group_Prefix(If you are using local and global groups from Mictosoft best practice) to suit your company standards. The module Active Direcotry and NTFSSecurity is also required.
+# Get-Effective-Permissions-HTML
+  To use Get-Effective-Permissions-HTML u need to alter $Path, the DOMAINPREFIX(thats the Domain\Name thing) and Local_Group_Prefix(If you   are using local and global groups from Mictosoft best practice) to suit your company standards. The module Active Direcotry and           NTFSSecurity is also required.
 
+# Profile:
+  To use the Powershell profile you need to Active Directory Module!
 
-To use the Powershell profile you need to Active Directory Module!
+# GUI
+  I do recoment to start the scipts with a shortcut with the following content [%windir%\System32\WindowsPowerShell\v1.0\powershell.exe - windowstyle hidden -Noninteractive -ExecutionPolicy Bypass –Noprofile -file "\\SERVER\PATH\TO\SCRIPT"]
+  
+  Membershipt.ps1 shows groupmembership of a user, group and the member of a group.
+  wildcard_search.ps1 does a wildcard AD-Query for user or group.
+  permission.ps1 shows the NTFS-Permissions to a specific path.
+  
+  For the GUIs you will need the Active Directory Module for wildcard_search.ps1 and membership.ps1.
+  For GUI permissions.ps1 you wil need the NTFSSecurity Module.
