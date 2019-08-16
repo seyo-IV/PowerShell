@@ -3,7 +3,7 @@
 
 $Form = New-Object system.Windows.Forms.Form
 $Form.ClientSize = '692,401'
-$Form.text = "AD Query"
+$Form.text = "NTFS-Permissions"
 $Form.TopMost = $false
 
 $FilePath = New-Object system.Windows.Forms.TextBox
