@@ -6,14 +6,6 @@ $Form.ClientSize = '692,401'
 $Form.text = "AD Query"
 $Form.TopMost = $false
 
-$PictureBox1                     = New-Object system.Windows.Forms.PictureBox
-$PictureBox1.width               = 156
-$PictureBox1.height              = 133
-$PictureBox1.location            = New-Object System.Drawing.Point(530,0)
-$PictureBox1.imageLocation       = "\\egvfs02\it$\ScriptRepository\GUI\source\data\posh.png"
-$PictureBox1.SizeMode            = [System.Windows.Forms.PictureBoxSizeMode]::zoom
-$Form.controls.AddRange(@($PictureBox1))
-
 $SamAccountName = New-Object system.Windows.Forms.TextBox
 $SamAccountName.multiline = $false
 $SamAccountName.width = 100
