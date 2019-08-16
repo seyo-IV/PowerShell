@@ -20,14 +20,6 @@ $SamAccountName.Add_KeyDown({
     }
 })
 
-$PictureBox1                     = New-Object system.Windows.Forms.PictureBox
-$PictureBox1.width               = 156
-$PictureBox1.height              = 133
-$PictureBox1.location            = New-Object System.Drawing.Point(530,0)
-$PictureBox1.imageLocation       = "\\egvfs02\it$\ScriptRepository\GUI\source\data\posh.png"
-$PictureBox1.SizeMode            = [System.Windows.Forms.PictureBoxSizeMode]::zoom
-$Form.controls.AddRange(@($PictureBox1))
-
 $List = New-Object system.Windows.Forms.ComboBox
 $List.width = 100
 $List.height = 50
