@@ -40,7 +40,7 @@ param(
         
 		Resolve-Path -Path $dir
 		Get-Item $dir | select FullName
-		Get-Acl -Path $dir -Filter Access | Select-Object -ExpandProperty Access | Where-Object {$_.IdentityReference -like "EBK\*"} | Select-Object IdentityReference
+		Get-Acl -Path $dir -Filter Access | Select-Object -ExpandProperty Access | Where-Object {$_.IdentityReference -like "DOMAIN\*"} | Select-Object IdentityReference
 		}
 	
 	  $Flist | ft FullName, IdentityReference
