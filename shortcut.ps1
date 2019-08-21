@@ -2,8 +2,8 @@
     Param (
         [Parameter(Mandatory=$true)]
         [string]$ScriptName,
-		[string]$Directory = $PWD
-		)
+	[string]$Directory = $PWD
+	)
 $WshShell = New-Object -comObject WScript.Shell
 $Shortcut = $WshShell.CreateShortcut("$PWD\$($ScriptName).lnk")
 $Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
