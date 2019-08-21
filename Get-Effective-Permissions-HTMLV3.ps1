@@ -31,7 +31,8 @@ param(
 	[Parameter(Mandatory=$True,
 	ValueFromPipeline=$True,
 	ValueFromPipelineByPropertyName=$True)]
-	[string]$Path
+	[string]$Path,
+	[string]$DomainPrefix = $env:USER
 	)
 import-module ActiveDirectory
 Import-Module NTFSSecurity
@@ -66,10 +67,10 @@ foreach($Dir in $PList)
 #------------------------------------------------------------------------ 
 # Collecting ACLs
 #------------------------------------------------------------------------
-        $ACLList = Get-NTFSAccess -path $dir | Where-Object {$_.Account -like "DOMAINPREFIX\*"} | select AccessRights, Account
+        $ACLList = Get-NTFSAccess -path $dir | Where-Object {$_.Account -like "$DomainPrefix\*"} | select AccessRights, Account
             foreach($ID in $ACLList)
                 {
-					$UID = $ID.Account.AccountName -replace 'DOMAINPREFIX\\'
+					$UID = $ID.Account.AccountName -replace '$DomainPrefix\\'
 					$Account = $ID.Account.AccountName
 					$AccessRight = $ID.AccessRights
                     
