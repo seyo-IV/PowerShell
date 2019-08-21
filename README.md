@@ -7,6 +7,7 @@
 
 # GUI
   I do recoment to start the scipts with a shortcut with the following content [%windir%\System32\WindowsPowerShell\v1.0\powershell.exe - windowstyle hidden -Noninteractive -ExecutionPolicy Bypass –Noprofile -file "\\SERVER\PATH\TO\SCRIPT"]
+  
   Or you use the shortcut.ps1 to create the shortcut to the GUI with above parameters. Note that the script shortcut.ps1 should be in the same directory where the GUI script is. You can then palce the shortcut wherever you like.
   
   
