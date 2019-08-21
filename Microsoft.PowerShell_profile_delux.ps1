@@ -102,16 +102,3 @@ Get-ChildItem -recurse | Select-String -pattern $find | group path | select name
 }
 
 Set-Alias -Name 'sfind' -Value 'sfind-PowerShell'
-
-### Get-New-Alias
-Function New-Aliases {
-Write-Host -ForegroundColor Yellow "New-Alias are:
-[  ufind  ] Find User by CN. Usage: ufind <name>`
-[  gfind  ] Find User by CN. Usage: gfind <name>`
-[  sfind  ] Find String in File. Usage: sfind <string>`
-[  perm   ] Read out NTFS permissions`
-[  pwgen  ] Password-Generator`
-[ scripts ] Change directory to \\EGVFS02\It$\ScriptRepository"
-}
-
-Set-Alias -Name 'Get-New-Alias' -Value 'New-Aliases'
