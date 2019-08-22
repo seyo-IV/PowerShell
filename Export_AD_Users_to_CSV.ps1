@@ -14,7 +14,7 @@
 #and since my files are located here it will find it.
 #It failes withpout appending "*.*" at the end
 
-$path = Split-Path -parent "C:\your\path\*.*"
+$path = Split-Path -parent $PWD
 
 #Create a variable for the date stamp in the log file
 
