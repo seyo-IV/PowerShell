@@ -35,4 +35,4 @@ $ObjectList += $data
 		}
 
 }
-$ObjectList | Export-Csv $CSVPAth -NoTypeInformation -Delimiter ';' -Encoding UTF8
+$ObjectList | Export-Csv $CSVPAth -NoTypeInformation -Encoding UTF8
