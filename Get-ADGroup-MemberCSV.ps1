@@ -1,7 +1,7 @@
 #requires -version 3 -module ActiveDirectory
 <#
 .SYNOPSIS
-  Export a lsit of groupmember with some properties.
+  Export a list of groupmember with some properties.
   
 .DESCRIPTION
   Export groupmember.
