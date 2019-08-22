@@ -1,4 +1,32 @@
-
+#requires -version 3 -module ActiveDirectory
+<#
+.SYNOPSIS
+  Export a lsit of groupmember with some properties.
+  
+.DESCRIPTION
+  Export groupmember.
+  
+.PARAMETER ListFile
+    File with Groups, one per line.
+    
+.PARAMETER CSVPath
+   Path to the CSV File with thre csv name.
+   
+.INPUTS
+  None.
+  
+.OUTPUTS
+  None.
+  
+.NOTES
+  Version:        1.0
+  Author:         Sergiy Ivanov
+  Creation Date:  22.08.2019
+  Purpose/Change: Initial script development
+  
+.EXAMPLE
+  Get-ADGroup-MemberCSV.ps1 -ListFile C:\temp\list.txt -CSVPath C:\temp\outputcsv
+#>
 [CmdletBinding()]
 param(
 	[Parameter(Mandatory=$True)]
