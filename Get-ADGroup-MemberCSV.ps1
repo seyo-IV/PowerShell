@@ -21,7 +21,6 @@ $data = @()
 		$Address = $GMember.PhysicalDeliveryOfficeName
 		$Location = $GMember.DistinguishedName
 		$Enabled = $GMember.Enabled
-		Write-Host $Address
 $list = New-Object PSCustomObject
 $list | Add-Member -type NoteProperty -Name "Group" -value $Groupname
 $list | Add-Member -type NoteProperty -Name "Name" -value $Name
