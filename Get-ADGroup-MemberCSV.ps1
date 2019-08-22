@@ -4,7 +4,7 @@ param(
 	[Parameter(Mandatory=$True)]
 	[string]$ListFile,
 	[Parameter(Mandatory=$True)]
-	[string]$CSVPAth
+	[string]$CSVPath
 	)
 $groups = Get-Content $ListFile
 $ObjectList =  @()
