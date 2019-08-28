@@ -7,7 +7,7 @@
  Path to scan.
 
  .EXAMPLE
- .\Effective_Permissions_HTML.ps1 -Path "\\Server\share"
+ .\Effective_Permissions_EXCEL.ps1 -Path "\\Server\share"
  #>
 [CmdletBinding()]
 param(
