@@ -59,16 +59,23 @@ foreach($Dir in $PList)
         $ACLList = Get-NTFSAccess -Path $dir | Where-Object {$_.Account -like "$Domain\*"} | select AccessRights, Account
             foreach($ID in $ACLList)
                 {
-					$UID = $ID.Account.AccountName -replace '$Domain\\'
+					$UID = $ID.Account.AccountName -replace "$Domain\\"
 					$Account = $ID.Account.AccountName
 					$AccessRight = $ID.AccessRights
                     
-                    $UserList =@()
-                    try{$UIDcheck = get-aduser -identity $UID}catch{$UIDcheck = get-adgroup -identity $UID}
+                    
+                    $UIDcheck = Get-ADObject -LDAPFilter "(sAMAccountName=$UID)"
 				    sleep -sec 1
                     if($UIDcheck.ObjectClass -eq "user")
                         {
-                        
+$data     = @()
+$list = New-Object PSCustomObject
+$list | Add-Member -type NoteProperty -Name Path -value $dir
+$list | Add-Member -type NoteProperty -Name Account -value $Account
+$list | Add-Member -type NoteProperty -Name AccessRight -value $AccessRight
+$list | Add-Member -type NoteProperty -Name User -value $UID
+$data += $list
+$ObjectList += $data
                         }
                     else
 						{
