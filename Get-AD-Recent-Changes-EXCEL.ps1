@@ -29,7 +29,7 @@ catch
 }
 $ObjectList =  @()
 $PList = @()
-$ErrorActionPreference = "Continue"
+$ErrorActionPreference = "SilentlyContinue"
 $plist                 = @()
 $Pathfinder			   = $Path -split "\\"
 $Pathfinder 		   = $Pathfinder | Select-Object -Last 1
