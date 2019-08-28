@@ -30,7 +30,6 @@ catch
 $ObjectList =  @()
 
 $ErrorActionPreference = "SilentlyContinue"
-#$Path                  = Read-Host "Enter Path to scan"
 $plist                 = @()
 $Pathfinder			   = $Path -split "\\"
 $Pathfinder 		   = $Pathfinder | Select-Object -Last 1
