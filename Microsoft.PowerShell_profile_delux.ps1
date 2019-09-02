@@ -9,7 +9,7 @@ Catch
   Write-Host "[ERROR]`t  Module couldn't be loaded. Script will stop! $($_.Exception.Message)" 
   Exit 1 
 } 
-"Wellcome 	[" + $env:Username + "]
+"Welcome 	[" + $env:Username + "]
 Use Get-New-Alias to get new functions"
 	
 ### Finder function USER
