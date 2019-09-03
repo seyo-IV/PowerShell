@@ -1,14 +1,29 @@
-﻿#requires -version 3 -module ActiveDirectory
- <#
- .SYNOPSIS
- Shows recent AD-Group changes and generates a HTML report.
-
- .PARAMETER Path
- Days past scan.
-
- .EXAMPLE
- .\Get-AD-Recent-Changes.ps1 -Days 3
- #>
+#requires -version 3 -module ActiveDirectory
+<#
+.SYNOPSIS
+  Generate a HTML report with removed or added groups of all user for x days.
+  
+.DESCRIPTION
+  Show removed or added groups for all users in x days.
+  
+.PARAMETER Days
+  Days to scan.
+    
+.INPUTS
+  None.
+  
+.OUTPUTS
+  "\\SERVER\Logs\Recent-Group-Changes.html"
+  
+.NOTES
+  Version:        1.0
+  Author:         Sergiy Ivanov
+  Creation Date:  03.09.2019
+  Purpose/Change: Initial script development
+  
+.EXAMPLE
+  Get-AD-Recent-Changes-HTML.ps1 -Days 10
+#>
 [CmdletBinding()]
 param(
 	[Parameter(Mandatory=$True)]
