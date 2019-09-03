@@ -1,31 +1,45 @@
-#requires -module ActiveDirectory
- <#
- .SYNOPSIS
- Generates a usermembership list and exports as csv.
-
- .PARAMETER LogName
- Specify a log for the export.
-
+#requires -version 3 -module ActiveDirectory
+<#
+.SYNOPSIS
+  This script exports Active directory User or Groups to a CSV.
+  
+.DESCRIPTION
+  Export user membership, group membership or group member ot a .CSV file.
+  
+.PARAMETER LogName
+  Name for the CSV file.
+  
  .PARAMETER Path
- Specify a file which containes the group names.
-
-
- .EXAMPLE
- .\Export_GroupList_CSV.ps1 -LogName NAME -Path C:\groups.txt
- 
- #>
+ Path to textfile with the group names.
+    
+.INPUTS
+  None.
+  
+.OUTPUTS
+  \\SERVER\$logname.csv
+  
+.NOTES
+  Version:        1.0
+  Author:         Sergiy Ivanov
+  Creation Date:  03.09.2019
+  Purpose/Change: Initial script development
+  
+.EXAMPLE
+  Export_GroupList.ps1 -LogName "Export_groups" -Path "C:\logs\groups.txt"
+#>
 [CmdletBinding()]
 param(
 	[Parameter(Mandatory=$True,
 	ValueFromPipeline=$True,
 	ValueFromPipelineByPropertyName=$True)]
 	[string]$LogName,
+	[Parameter(Mandatory=$True)]
 	[string]$Path
 	)
 	
 	$statuses = @()
 	
-	$groups = cat $Path
+    $groups = cat $Path
     $splitter = [regex]"\s+"
 
     foreach ($group in $groups)
