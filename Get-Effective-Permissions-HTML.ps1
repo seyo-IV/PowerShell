@@ -1,20 +1,29 @@
-#------------------------------------------------------------------------ 
-# Author: Sergiy Ivanov (Im Auftrag der ECKD Service GmbH) 
-# Verwendungszweck: Script to generate a permission report. 
-# Modules Required: ActiveDirectory and NTFSSecurity
-# Datum: 20.03.2019 
-#------------------------------------------------------------------------ 
-#requires -module ActiveDirectory, NTFSSecurity
- <#
- .SYNOPSIS
- Generates an HTML-based permission report
-
- .PARAMETER Path
- Path to scan.
-
- .EXAMPLE
- .\Get-Effective-Permissions-HTMLV3.ps1 -Path \\SERVER\SHARE
- #> 
+#requires -version 3 -module ActiveDirectory, NTFSSecurity
+<#
+.SYNOPSIS
+  Generate a HTML report with with user and groups with effective permissions.
+  
+.DESCRIPTION
+  Show effective permissions of user and groups.
+  
+.PARAMETER Path
+  Path to scan to.
+    
+.INPUTS
+  None.
+  
+.OUTPUTS
+  "\\SERVER\Logs\Effective_Permissions_$Pathfinder.html"
+  
+.NOTES
+  Version:        1.0
+  Author:         Sergiy Ivanov
+  Creation Date:  03.09.2019
+  Purpose/Change: Initial script development
+  
+.EXAMPLE
+  Get-Effective-Permissions-EXCEL.ps1 -Path \\SERVER\SHARE
+#>
 #------------------------------------------------------------------------ 
 # Variables 
 #------------------------------------------------------------------------ 
@@ -44,15 +53,12 @@ $pathfinder		= $PPath -split "\\"
 $pathfinder 		= $pathfinder | Select-Object -Last 1
 $PPath                  = "\\SERVER\SHARE\Logs\"
 $file                   = $PPath + "Effective_Permissions_" + $Pathfinder + ".html"
-$Folders                = $Path -Split "\\"
-$PathList	        = $Folders | % { $i = 0 } { $Folders[0..$i] -Join "\" -Replace ":$", ":\"; $i++ }
-$Plist 			+= $pathlist
 Write-Progress -Activity “Scanning Directory” -Status “Scanning” -PercentComplete 50
 try
 {
-$list 	= Get-Childitem -Path $Path -Recurse | ?{ $_.PSIsContainer } | Select-Object FullName
-$list 	= $list.fullname
-$Plist += $list
+$DirList = (Get-Childitem -Path $Path -Recurse -Depth 3 | ?{ $_.PSIsContainer }).FullName
+$Plist += $Path
+$PList += $DirList
 }
 catch {Write-Warning "Enter a correct path"}
 Write-Progress -Activity “Scaning Directory” -Status “Complete” -PercentComplete 100
@@ -67,10 +73,10 @@ foreach($Dir in $PList)
 #------------------------------------------------------------------------ 
 # Collecting ACLs
 #------------------------------------------------------------------------
-        $ACLList = Get-NTFSAccess -path $dir | Where-Object {$_.Account -like "$DomainPrefix\*"} | select AccessRights, Account
+        $ACLList = Get-NTFSAccess -path $dir | Where-Object {$_.Account -like "$Domain\*"} | select AccessRights, Account
             foreach($ID in $ACLList)
                 {
-					$UID = $ID.Account.AccountName -replace '$DomainPrefix\\'
+					$UID = $ID.Account.AccountName -replace '$Domain\\'
 					$Account = $ID.Account.AccountName
 					$AccessRight = $ID.AccessRights
                     
