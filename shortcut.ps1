@@ -1,4 +1,31 @@
-﻿[CmdletBinding ()]
+#requires -version 3
+<#
+.SYNOPSIS
+  This script creates a shortcutt in the current directory for the GUI scripts with some
+  fancy start parametern, so the shell isn't visible etc...
+  
+.DESCRIPTION
+  Create a sortcut for the GUI scripts.
+  
+.PARAMETER ScriptName
+  Name of the script without the fileextension.
+    
+.INPUTS
+  None.
+  
+.OUTPUTS
+  Create a shortcut in the current dierctory.
+  
+.NOTES
+  Version:        1.0
+  Author:         Sergiy Ivanov
+  Creation Date:  30.08.2019
+  Purpose/Change: Initial script development
+  
+.EXAMPLE
+  shortcut.ps1 -ScriptName SomeScript
+#>
+ [CmdletBinding ()]
     Param (
         [Parameter(Mandatory=$true)]
         [string]$ScriptName,
