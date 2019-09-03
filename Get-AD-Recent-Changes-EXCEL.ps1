@@ -22,7 +22,7 @@
   Purpose/Change: Initial script development
   
 .EXAMPLE
-  Get-AD-Recent-Changes-HTML.ps1 -Days 10
+  Get-AD-Recent-Changes-EXCEL.ps1 -Days 10
 #>
 [CmdletBinding()]
 param(
