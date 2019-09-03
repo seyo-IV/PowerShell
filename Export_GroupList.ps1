@@ -1,23 +1,47 @@
-﻿ #requires -version 3 -module ActiveDirectory
- <#
- .SYNOPSIS
- Export a grouplist of a user or a group
-
- .PARAMETER sAMAccountName
- Group or username
-
- .EXAMPLE
- .\Export_GroupList.ps1 -sAMAccountName "Peter.Parker"
- #>
+#requires -version 3 -module ActiveDirectory
+<#
+.SYNOPSIS
+  This script exports Active directory User or Groups to a logfile.
+  
+.DESCRIPTION
+  Export user membership, group membership or group member ot a .log file.
+  
+.PARAMETER sAMAccountName
+  SamAccountName of User or Group.
+  
+ .PARAMETER Path
+ Path to the logs direcotory, without the log file.
+    
+.INPUTS
+  None.
+  
+.OUTPUTS
+  Creates the CSV in the current directory.
+  
+.NOTES
+  Version:        1.0
+  Author:         Sergiy Ivanov
+  Creation Date:  03.09.2019
+  Purpose/Change: Initial script development
+  
+.EXAMPLE
+  Export_GroupList.ps1 -SamAccountName "Perter.Parker" -Path "C:\logs"
+#>
  
  [CmdletBinding()]
 param(
 	[Parameter(Mandatory=$True,
 	ValueFromPipeline=$True,
 	ValueFromPipelineByPropertyName=$True)]
-	[string]$sAMAccountName
+	[string]$sAMAccountName,
+	[Parameter(Mandatory=$True,
+	ValueFromPipeline=$True,
+	ValueFromPipelineByPropertyName=$True)]
+	[string]$Path = "\\SERVER\SHARE\"
 	)
 $ErrorActionpreference = "SilentlyContinue"
+Import-Module ActiveDirectory -ErrorAction Stop
+
 $exist = Get-ADObject -LDAPFilter "(sAMAccountName=$sAMAccountName)"
 if(!$exist){
 Write-Warning "AD-Object doesen't exist!"
@@ -51,8 +75,7 @@ switch($Opt)
 	}
 }
 }
-Import-Module ActiveDirectory -ErrorAction Stop 
-$error.clear()
+ 
 $Source = $sAMAccountName
 $Path   = "\\SERVER\SHARE\"
 $log    = $path + $Source + ".log"
