@@ -1,14 +1,17 @@
 #requires -version 3 -module ActiveDirectory
 <#
 .SYNOPSIS
-  Generate a HTML report with removed or added groups of all user for x days.
+  Generate a HTML report with effective permissions for user and groups.
   
 .DESCRIPTION
-  Show removed or added groups for all users in x days.
+  Show effective permissions for user and groups..
   
-.PARAMETER Days
-  Days to scan.
-    
+.PARAMETER Path
+  Path to scan.
+
+.PARAMETER Depth
+  How deep should the scan go.
+  
 .INPUTS
   None.
   
@@ -22,12 +25,18 @@
   Purpose/Change: Initial script development
   
 .EXAMPLE
-  Get-AD-Recent-Changes-HTML.ps1 -Days 10
+  Get-AD-Recent-Changes-HTML.ps1 -Path \\SERVER\SHARE -Depth 5
 #>
 [CmdletBinding()]
 param(
-	[Parameter(Mandatory=$True)]
-	[string]$Days
+	[Parameter(Mandatory=$True,
+	ValueFromPipeline=$True,
+	ValueFromPipelineByPropertyName=$True)]
+	[string]$Path,
+	[Parameter(Mandatory=$True,
+	ValueFromPipeline=$True,
+	ValueFromPipelineByPropertyName=$True)]
+	[int]$Depth
 	)
 
 $head = "<style>
@@ -36,74 +45,162 @@ table {width:100%;}
 th {font-family:candara;font-size:14pt;background-color:#9e1981;}
 h1 {font-family:candara;font-size:18pt}
 p1 {font-family:candara;font-size:9pt}
-</style>"
-$PPath                 = "\\SERVER\Logs"
-$file                  = $PPath + "Recent-Group-Changes.html"
-$tpFile = Test-Path $file
-if($tpFile){
-Remove-item $file
+</style>
+
+<title>Effective Permissions</title>"
+try{
+import-module ActiveDirectory
+Import-Module NTFSSecurity
+}
+catch
+{ 
+  Write-Host "[ERROR]`t  Module couldn't be loaded. Script will stop! $($_.Exception.Message)" 
+  Exit 1 
 }
 $ObjectList =  @()
-Write-Host -ForegroundColor Yellow "This may take some time..."
-# Get domain controllers list
-$DCs = Get-ADDomainController -Filter *
- 
-# Define timeframe for report (default is 1 day)
-$startDate = (get-date).AddDays(-$days)
-$x = 0
-# Store group membership changes events from the security event logs in an array.
-foreach ($DC in $DCs){
-$StopWatch=[system.diagnostics.stopwatch]::startNew()
-Write-Progress -Id 1 -Activity “Scanning DCs” -Status “On $DC” -PercentComplete ($x / $DCs.count*100) 
-$events = Get-Eventlog -LogName Security -ComputerName $DC.Hostname -after $startDate | where {$_.eventID -eq 4728 -or $_.eventID -eq 4729}
-$x++
+$i					   = 0
+$ErrorActionPreference = "SilentlyContinue"
+$plist                 = @()
+$Pathfinder			   = $Path -split "\\"
+$Pathfinder 		   = $Pathfinder | Select-Object -Last 1
+$PPath                 = "\\SERVER\Logs\"
+$file                  = $PPath + "Effective_Permissions_" + $Pathfinder + ".html"
+Write-Progress -Activity “Scanning Directory” -Status “Scanning” -PercentComplete 50
+try
+{
+If($Depth -eq ""){
+$DirList 	= (Get-Childitem -Path $Path -Recurse | ?{ $_.PSIsContainer }).FullName
+$Plist += $Path
+$PList += $DirList
+}else{
+$DirList 	= (Get-Childitem -Path $Path -Recurse -Depth 3 | ?{ $_.PSIsContainer }).FullName
+$Plist += $Path
+$PList += $DirList
 }
- 
-# Loop through each stored event; print all changes to security global group members with when, who, what details.
- $i = 0
-  foreach ($e in $events){
-	Write-Progress -ParentId 1 -Activity “Scanning Events” -Status “On $e” -PercentComplete ($i / $events.count*100) 
- # Member Added to Group
- 
-    if (($e.EventID -eq 4728 )){
-      #write-host "Group: "$e.ReplacementStrings[2] "`tAction: Member added `tWhen: "$e.TimeGenerated "`tWho: "$e.ReplacementStrings[6] "`tAccount added: "$e.ReplacementStrings[0]
-	  $Group = $e.ReplacementStrings[2] | Out-String
-	  $When = $e.TimeGenerated | Out-String
-	  $Who = $e.ReplacementStrings[6] | Out-String
-	  try{$Account = (Get-ADUser -filter * -SearchBase $e.ReplacementStrings[0]).Name | Out-String}
-	  catch{$Account = "User not found"}
-	  
-	$data     = @()
-	$list = New-Object PSCustomObject
-	$list | Add-Member -type NoteProperty -Name Group -value $Group
-	$list | Add-Member -type NoteProperty -Name Action -value "Added"
-	$list | Add-Member -type NoteProperty -Name When -value $When
-	$list | Add-Member -type NoteProperty -Name Who -value $Who
-	$list | Add-Member -type NoteProperty -Name Account -value $Account
-	$data += $list
-	$ObjectList += $data
-    }
-    # Member Removed from Group
-    if (($e.EventID -eq 4729 )) {
-      #write-host "Group: "$e.ReplacementStrings[2] "`tAction: Member removed `tWhen: "$e.TimeGenerated "`tWho: "$e.ReplacementStrings[6] "`tAccount removed: "$e.ReplacementStrings[0]
-	  $Group = $e.ReplacementStrings[2] | Out-String
-	  $When = $e.TimeGenerated | Out-String
-	  $Who = $e.ReplacementStrings[6] | Out-String
-	  try{$Account = (Get-ADUser -filter * -SearchBase $e.ReplacementStrings[0]).Name | Out-String}
-	  catch{$Account = "User not found"}
-	  
-	$data     = @()
-	$list = New-Object PSCustomObject
-	$list | Add-Member -type NoteProperty -Name Group -value $Group
-	$list | Add-Member -type NoteProperty -Name Action -value "Removed"
-	$list | Add-Member -type NoteProperty -Name When -value $When
-	$list | Add-Member -type NoteProperty -Name Who -value $Who
-	$list | Add-Member -type NoteProperty -Name Account -value $Account
-	$data += $list
-	$ObjectList += $data
-    }
-	$i++
-	}
+}
+catch {Write-Warning "Enter a correct Path"}
+Write-Progress -Activity “Scaning Directory” -Status “Complete” -PercentComplete 100
 
-$ObjectList | ConvertTo-Html -As table -Head $head -PreContent "<h1>Recent Group Changes</h1>" | Out-File $file
-Write-Host "Report generated at $file"
+#------------------------------------------------------------------------ 
+# Foreach Loop 
+#------------------------------------------------------------------------
+foreach($Dir in $PList)
+    {
+	Write-Progress -Activity “Scanning folders” -Status “On $dir” -PercentComplete ($i / $plist.count*100)
+
+#------------------------------------------------------------------------ 
+# Collecting ACLs
+#------------------------------------------------------------------------
+        $ACLList = Get-NTFSAccess -Path $dir | Where-Object {$_.Account -like "Domain\*"} | select AccessRights, Account
+            foreach($ID in $ACLList)
+                {
+					$UID = $ID.Account.AccountName -replace 'Domain\\'
+					$Account = $ID.Account.AccountName
+					$AccessRight = $ID.AccessRights
+                    
+                    $UserList =@()
+                    try{$UIDcheck = get-aduser -identity $UID}catch{$UIDcheck = get-adgroup -identity $UID}
+				    sleep -sec 1
+                    if($UIDcheck.ObjectClass -eq "user")
+                        {
+                        
+                        }
+                    else
+						{
+                        if($UID -Like "*LOCAL_GROUP_PREFIX*")
+                            {
+                    $GrName  = (Get-ADGroup $UID -Properties member | Select-Object -ExpandProperty member | Select -first 1 | %{Get-ADGroup $_}).name
+                    $ADGroup = Get-ADGroup $GrName -Properties member | Select-Object -ExpandProperty member
+
+                    foreach ($Object in $ADGroup)
+		                {
+		                    $GetName		= Get-ADUser -filter * -SearchBase "$Object"
+		                    if($GetName -ne $null)
+                                {
+									$Name = $GetName.sAMAccountName
+                                    $UserList += $Name + ";"
+									
+                                }
+                                
+                                
+		                }
+							}else{
+					$token = Get-ADGroup -Filter {name -eq $UID -and GroupScope -eq "DomainLocal"}
+					if($token)
+					{
+
+					$nestedgroups = Get-ADGroupMember $id | ?{$_.ObjectClass -eq "Group"} | %{(Get-ADGroupMember $_ | ?{$_.ObjectClass -eq "Group"}).name}
+					foreach($group in $nestedgroups)
+					{
+                   
+                    #$group = $group -replace "@{name=", "" -replace "}"
+ 
+                    
+                    $ADGroup = Get-ADGroup $group -Properties member | Select-Object -ExpandProperty member
+
+                    foreach ($Object in $ADGroup)
+		                {
+		                    
+                            $GetName	  = Get-ADUser -filter * -SearchBase "$Object"
+		                    if($GetName -ne $null)
+                                {
+                                    
+									$Name = $GetName.sAMAccountName
+									$UserList += $Name + ";"
+
+                                }
+                                
+                                
+		                }
+                           
+                           else{}
+                           }
+						   }
+						   else
+							{
+					$ADGroup = Get-ADGroup $UID -Properties member | Select-Object -ExpandProperty member
+
+                   
+                    foreach ($Object in $ADGroup)
+		                {
+		                    
+                            $GetName	  = Get-ADUser -filter * -SearchBase "$Object"
+		                    if($GetName -ne $null)
+                                {
+                                    
+									$Name = $GetName.sAMAccountName
+									$UserList += $Name + ";"
+                                    
+
+                                }
+                                
+                                
+		                }
+							}
+								}
+                        } 
+$data     = @()
+$Account = $Account | Out-String
+$AccessRight = $AccessRight | Out-String
+$UserList = $UserList | Get-Unique
+$UserList = $UserList | ForEach-Object { 
+    if( $UserList.IndexOf($_) -eq ($UserList.count -1) ){
+        $_.replace(";","")
+    }else{$_}  
+}
+$UserList = $UserList | Out-String
+
+
+$list = New-Object PSCustomObject
+$list | Add-Member -type NoteProperty -Name Path -value $dir
+$list | Add-Member -type NoteProperty -Name Account -value $Account
+$list | Add-Member -type NoteProperty -Name AccessRight -value $AccessRight
+$list | Add-Member -type NoteProperty -Name UserList -value $UserList
+$data += $list
+$ObjectList += $data
+                 }
+
+$i++
+}
+
+$ObjectList | ConvertTo-Html -As table -Head $head -PreContent "<h1>Effective Permissions</h1>" | Out-File $file
