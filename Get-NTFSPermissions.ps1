@@ -30,8 +30,7 @@ param(
 	[Parameter(Mandatory=$True,
 	ValueFromPipeline=$True,
 	ValueFromPipelineByPropertyName=$True)]
-	[string]$Path,
-	[string]$DomainPrefix = $env:USERDOMAIN
+	[string]$Path
 	)
 
         $ErrorActionPreference = "SilentlyContinue"
@@ -41,10 +40,10 @@ param(
         
 		Resolve-Path -Path $dir
 		Get-Item $dir | select FullName
-		Get-Acl -Path $dir -Filter Access | Select-Object -ExpandProperty Access | Where-Object {$_.IdentityReference -like "$DomainPrefix\*"} | Select-Object IdentityReference
+		Get-Acl -Path $dir -Filter Access | Select-Object -ExpandProperty Access
 		}
 	
-	  $Flist | ft FullName, IdentityReference
+	  $Flist | Format-Table FullName, IdentityReference, FileSystemRights
 
 
 
