@@ -37,7 +37,8 @@ $Search.Font = 'Microsoft Sans Serif,10'
 $Search.Add_Click({
 	import-module ActiveDirectory
 	Import-Module NTFSSecurity
-    $Path = $FilePath.Text
+	$Domain = $env:UserDomain
+        $Path = $FilePath.Text
 	$Results = @()
 	if($Path){
 	$Folders = $Path -Split "\\"
@@ -47,10 +48,10 @@ $Search.Add_Click({
 	if($dir -ne "\"){
 		$tpDir = Test-Path $dir
 		if($tpDir){
-        $ACLList = Get-NTFSAccess -Path $dir | Where-Object {$_.Account -like "DOMAIN\*"} | select AccessRights, Account
+        $ACLList = Get-NTFSAccess -Path $dir | Where-Object {$_.Account -like "$Domain\*"} | select AccessRights, Account
             foreach($ID in $ACLList)
                 {
-					$UID = $ID.Account.AccountName -replace 'DOMAIN\\'
+					$UID = $ID.Account.AccountName -replace "$Domain\\"
 					$Account = $ID.Account.AccountName
 					$AccessRight = $ID.AccessRights
 					$Account = $Account | Out-String
