@@ -44,6 +44,7 @@ catch
 }
 $ObjectList =  @()
 $PList = @()
+$Domain = $env:UserDomain
 $ErrorActionPreference = "SilentlyContinue"
 $plist          = @()
 $Pathfinder	= $Path -split "\\"
@@ -66,10 +67,10 @@ foreach($Dir in $PList)
 #------------------------------------------------------------------------ 
 # Collecting ACLs
 #------------------------------------------------------------------------
-        $ACLList = Get-NTFSAccess -Path $dir | Where-Object {$_.Account -like "Domain\*"} | select AccessRights, Account
+        $ACLList = Get-NTFSAccess -Path $dir | Where-Object {$_.Account -like "$Domain\*"} | select AccessRights, Account
             foreach($ID in $ACLList)
                 {
-					$UID = $ID.Account.AccountName -replace "Domain\\"
+					$UID = $ID.Account.AccountName -replace "$Domain\\"
 					$Account = $ID.Account.AccountName
 					$AccessRight = $ID.AccessRights
                     $UIDcheck = Get-ADObject -LDAPFilter "(sAMAccountName=$UID)"
