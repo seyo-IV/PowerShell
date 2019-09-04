@@ -9,12 +9,10 @@ Catch
   Write-Host "[ERROR]`t  Module couldn't be loaded. Script will stop! $($_.Exception.Message)" 
   Exit 1 
 } 
-"Welcome 	[" + $env:Username + "]
-Use Get-New-Alias to get new functions"
+"Welcome 	[" + $env:Username + "]"
 	
 ### Finder function USER
-Function ufind-PowerShell {
-#$find		= Read-Host "Find"  
+Function ufind-PowerShell {  
 param ( [string]$find)
 Get-ADUser -Filter "cn -like '*$find*'" -Properties DisplayName | ft SamAccountName, displayName
 }
@@ -23,7 +21,6 @@ Set-Alias -Name 'ufind' -Value 'ufind-PowerShell'
 
 ### Finder function GROUP
 Function gfind-PowerShell {
-#$find		= Read-Host "Find"
 param ( [string]$find)  
 
 $getuser = Get-ADGroup -Filter "CN -like '*$find*'" -Properties cn | ft SamAccountName
@@ -95,8 +92,7 @@ $Flist | ft FullName, IdentityReference, FileSystemRights
 
 Set-Alias -Name 'perm' -Value 'NTFSPerm-PowerShell'
 
-Function sfind-PowerShell {
-#$find		= Read-Host "Find"  
+Function sfind-PowerShell {  
 param ( [string]$find)
 Get-ChildItem -recurse | Select-String -pattern $find | group path | select name
 }
