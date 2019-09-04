@@ -57,6 +57,7 @@ catch
   Write-Host "[ERROR]`t  Module couldn't be loaded. Script will stop! $($_.Exception.Message)" 
   Exit 1 
 }
+$Domain = $env:UserDomain
 $ObjectList =  @()
 $i					   = 0
 $ErrorActionPreference = "SilentlyContinue"
@@ -91,10 +92,10 @@ foreach($Dir in $PList)
 #------------------------------------------------------------------------ 
 # Collecting ACLs
 #------------------------------------------------------------------------
-        $ACLList = Get-NTFSAccess -Path $dir | Where-Object {$_.Account -like "Domain\*"} | select AccessRights, Account
+        $ACLList = Get-NTFSAccess -Path $dir | Where-Object {$_.Account -like "$Domain\*"} | select AccessRights, Account
             foreach($ID in $ACLList)
                 {
-					$UID = $ID.Account.AccountName -replace 'Domain\\'
+					$UID = $ID.Account.AccountName -replace "$Domain\\"
 					$Account = $ID.Account.AccountName
 					$AccessRight = $ID.AccessRights
                     
