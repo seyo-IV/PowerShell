@@ -27,14 +27,7 @@
 #------------------------------------------------------------------------ 
 # Variables 
 #------------------------------------------------------------------------ 
-$head = "<style>
-td {font-family:candara;width:100px; max-width:300px; background-color:white;}
-table {width:100%;}
-th {font-family:candara;font-size:14pt;background-color:grey;}
-h1 {font-family:candara;font-size:18pt}
-p1 {font-family:candara;font-size:9pt}
-</style>
-<title>Effective Permissions</title>"
+
 [CmdletBinding()]
 param(
 	[Parameter(Mandatory=$True,
@@ -43,10 +36,19 @@ param(
 	[string]$Path,
 	[string]$DomainPrefix = $env:USER
 	)
+$head = "<style>
+td {font-family:candara;width:100px; max-width:300px; background-color:white;}
+table {width:100%;}
+th {font-family:candara;font-size:14pt;background-color:grey;}
+h1 {font-family:candara;font-size:18pt}
+p1 {font-family:candara;font-size:9pt}
+</style>
+<title>Effective Permissions</title>"
 import-module ActiveDirectory
 Import-Module NTFSSecurity
 $ObjectList =  @()
-$i					   = 0
+$i  = 0
+$Domain = $env:UserDomain
 $ErrorActionPreference 	= "SilentlyContinue"
 $plist                 	= @()
 $pathfinder		= $PPath -split "\\"
