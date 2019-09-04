@@ -77,6 +77,7 @@ Set-Alias -Name 'pwgen' -Value 'pwgenerator-PowerShell'
 Function NTFSPerm-PowerShell {
 param ( [string]$Path)
 $ErrorActionPreference = "SilentlyContinue"
+$Domain = $env:UserDomain
 $Folders = $Path -Split "\\"
 $Plist	 = $Folders | % { $i = 0 } { $Folders[0..$i] -Join "\" -Replace ":$", ":\"; $i++ } 
 
@@ -84,7 +85,7 @@ $FList   = foreach($dir in $Plist)
 	{
     Resolve-Path -Path $dir
 	Get-Item $dir | select FullName
-	Get-Acl -Path $dir -Filter Access | Select-Object -ExpandProperty Access | Where-Object {$_.IdentityReference -like "EBK\*"} | Select-Object IdentityReference, FileSystemRights
+	Get-Acl -Path $dir -Filter Access | Select-Object -ExpandProperty Access | Where-Object {$_.IdentityReference -like "$Domain\*"} | Select-Object IdentityReference, FileSystemRights
     }
 	
 $Flist | ft FullName, IdentityReference, FileSystemRights
