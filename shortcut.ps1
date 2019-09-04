@@ -8,7 +8,7 @@
   Create a sortcut for the GUI scripts.
   
 .PARAMETER ScriptName
-  Name of the script without the fileextension.
+  Name of the script without the file extension.
     
 .INPUTS
   None.
