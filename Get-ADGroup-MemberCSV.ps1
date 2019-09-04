@@ -10,7 +10,7 @@
     File with Groups, one per line.
     
 .PARAMETER CSVPath
-   Path to the CSV File with thre csv name.
+   Path to the CSV File with the csv name.
    
 .INPUTS
   None.
