@@ -1,10 +1,18 @@
-﻿Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Windows.Forms
 [System.Windows.Forms.Application]::EnableVisualStyles()
 
 $Form = New-Object system.Windows.Forms.Form
 $Form.ClientSize = '692,401'
 $Form.text = "NTFS-Permissions"
 $Form.TopMost = $false
+
+$Label1                          = New-Object system.Windows.Forms.Label
+$Label1.text                     = "by Sergiy Ivanov"
+$Label1.AutoSize                 = $true
+$Label1.width                    = 25
+$Label1.height                   = 10
+$Label1.location                 = New-Object System.Drawing.Point(400,25)
+$Label1.Font                     = 'Microsoft Sans Serif,10'
 
 $FilePath = New-Object system.Windows.Forms.TextBox
 $FilePath.multiline = $false
@@ -37,6 +45,8 @@ $Search.Add_Click({
 	foreach($Dir in $PList)
     {
 	if($dir -ne "\"){
+		$tpDir = Test-Path $dir
+		if($tpDir){
         $ACLList = Get-NTFSAccess -Path $dir | Where-Object {$_.Account -like "EBK\*"} | select AccessRights, Account
             foreach($ID in $ACLList)
                 {
@@ -52,12 +62,25 @@ $Search.Add_Click({
 					$Results += $list
 					
 	}
+	}else{
+					$Dir = "__INVALID__" | Out-String
+					$Account = "__N/A__" | Out-String
+					$AccessRight = "__N/A__" | Out-String
+					$list = New-Object PSCustomObject
+					$list | Add-Member -type NoteProperty -Name Path -value $Dir
+					$list | Add-Member -type NoteProperty -Name Account -value $Account
+					$list | Add-Member -type NoteProperty -Name AccessRight -value $AccessRight
+					$Results += $list
 	}
+	}
+	
 	}
     $DataGridView1.Rows.Clear()
     $Results | ForEach-Object { $DataGridView1.Rows.Add($_.Path, $_.Account, $_.AccessRight) }
     $DataGridView1.Refresh()
+	Clear-Variable Results
 	}
+
 	})
 
 $DataGridView1 = New-Object system.Windows.Forms.DataGridView
@@ -73,5 +96,5 @@ $DataGridView1.Columns[0].AutoSizeMode = "Fill"
 $DataGridView1.Columns[1].AutoSizeMode = "Fill"
 $DataGridView1.Columns[2].AutoSizeMode = "Fill"
 
-$Form.controls.AddRange(@($FilePath,$Search,$DataGridView1))
+$Form.controls.AddRange(@($FilePath,$Search,$DataGridView1,$Label1))
 $Form.ShowDialog()
