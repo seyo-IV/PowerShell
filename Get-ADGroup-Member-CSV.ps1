@@ -25,7 +25,7 @@
   Purpose/Change: Initial script development
   
 .EXAMPLE
-  Get-ADGroup-MemberCSV.ps1 -ListFile C:\temp\list.txt -CSVPath C:\temp\outputcsv
+  Get-ADGroup-Member-CSV.ps1 -ListFile C:\temp\list.txt -CSVPath C:\temp\outputcsv
 #>
 [CmdletBinding()]
 param(
