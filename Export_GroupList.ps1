@@ -34,9 +34,7 @@ param(
 	ValueFromPipeline=$True,
 	ValueFromPipelineByPropertyName=$True)]
 	[string]$sAMAccountName,
-	[Parameter(Mandatory=$True,
-	ValueFromPipeline=$True,
-	ValueFromPipelineByPropertyName=$True)]
+	[Parameter(Mandatory=$True)]
 	[string]$Path = "\\SERVER\SHARE\"
 	)
 $ErrorActionpreference = "SilentlyContinue"
@@ -77,7 +75,6 @@ switch($Opt)
 }
  
 $Source = $sAMAccountName
-$Path   = "\\SERVER\SHARE\"
 $log    = $path + $Source + ".log"
 
 
