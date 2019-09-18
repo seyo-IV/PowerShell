@@ -35,7 +35,7 @@ param(
 	ValueFromPipelineByPropertyName=$True)]
 	[string]$sAMAccountName,
 	[Parameter(Mandatory=$True)]
-	[string]$Path = "\\SERVER\SHARE\"
+	[string]$Path
 	)
 $ErrorActionpreference = "SilentlyContinue"
 Import-Module ActiveDirectory -ErrorAction Stop
