@@ -5,9 +5,24 @@
 Add-Type -AssemblyName System.Windows.Forms
 [System.Windows.Forms.Application]::EnableVisualStyles()
 
+$ErrorActionPreference = "SilentlyContinue"
+
+$Directory = $PSScriptRoot
+$Date = Get-DAte -Format ddmmyyyy
+$tpLog = Test-Path -Path $Directory"\logs"
+$LogPath = $Directory + "\logs\Change-AD-User_$date.log"
+$Global:Log = $LogPath
+    if(!$tpLogs){
+    New-Item -Type Directory -path $Directory -Name logs
+    }
+$tpLogFile = Test-Path $LogPath
+    if($tpLogFile){
+    Remove-Item $LogPath
+    }
 ###################################################################################################
 ##################################### Functions ###################################################
 ###################################################################################################
+
 
 function Get-User-Object {
 $User = Get-ADUser -Identity $sAMAccountName_TB.Text
@@ -23,6 +38,7 @@ $User = Get-ADUser -Identity $sAMAccountName_TB.Text
 }
 
 function Get-User-Properties {
+$ERROR.Clear()
 $ADUserObject = Get-ADUser -Identity $Sam.sAMAccountName -Properties DisplayName, Company, HomeDrive, HomeDirectory, Title, Mail, CanonicalName, physicalDeliveryOfficeName, ProfilePath, Department
 $Department = $ADUserObject.Department
 $ProfilePath = $ADUserObject.ProfilePath
@@ -79,9 +95,13 @@ $ListBox1.Items.Add("
 `r`n TSHomeDrive: $TSHomeDrive")
 $ListBox1.Items.Add("
 `r`n TSHomeDirectory: $TsHomeDirectory")
+if($ERROR.count -ne 0){
+$ERROR | Out-File $Log -Append
+}
 }
 
 Function Set-Permissions {
+$ERROR.Clear()
     if($Reference_CB.Text -eq "" -or $Reference_CB -eq $null){
     $ListBox1.Items.Add("
 `r`n Reference is null or empty!")
@@ -95,7 +115,7 @@ Function Set-Permissions {
 `r`n $($sam.sAMAccountName) added group $Grp")
         }
     }
-    elseif($Reference_CB.Text -eq "RU_21XXX"){
+    elseif($Reference_CB.Text -eq "REFUSER1"){
     $Groups = Get-ADUser -Identity $Reference_CB.Text -Properties memberof | Select-Object -ExpandProperty memberof
         foreach ($Group in $Groups) {
         Add-ADGroupMember -Identity $Group -Members $Sam.sAMAccountName
@@ -104,7 +124,7 @@ Function Set-Permissions {
 `r`n $($sam.sAMAccountName) added group $Grp")
         }
     }
-    elseif($Reference_CB.Text -eq "RU_9XXXX"){
+    elseif($Reference_CB.Text -eq "REFUSER2"){
     $Groups = Get-ADUser -Identity $Reference_CB.Text -Properties memberof | Select-Object -ExpandProperty memberof
         foreach ($Group in $Groups) {
         Add-ADGroupMember -Identity $Group -Members $Sam.sAMAccountName
@@ -113,7 +133,7 @@ Function Set-Permissions {
 `r`n $($sam.sAMAccountName) added group $Grp")
         }
     }
-    elseif($Reference_CB.Text -eq "RU_21530"){
+    elseif($Reference_CB.Text -eq "REFUSER3"){
     $Groups = Get-ADUser -Identity $Reference_CB.Text -Properties memberof | Select-Object -ExpandProperty memberof
         foreach ($Group in $Groups) {
         Add-ADGroupMember -Identity $Group -Members $Sam.sAMAccountName
@@ -122,7 +142,7 @@ Function Set-Permissions {
 `r`n $($sam.sAMAccountName) added group $Grp")
         }
     }
-    elseif($Reference_CB.Text -eq "RU_21070"){
+    elseif($Reference_CB.Text -eq "REFUSER4"){
     $Groups = Get-ADUser -Identity $Reference_CB.Text -Properties memberof | Select-Object -ExpandProperty memberof
         foreach ($Group in $Groups) {
         Add-ADGroupMember -Identity $Group -Members $Sam.sAMAccountName
@@ -131,7 +151,7 @@ Function Set-Permissions {
 `r`n $($sam.sAMAccountName) added group $Grp")
         }
     }
-    elseif($Reference_CB.Text -eq "RU_34100"){
+    elseif($Reference_CB.Text -eq "REFUSER5"){
     $Groups = Get-ADUser -Identity $Reference_CB.Text -Properties memberof | Select-Object -ExpandProperty memberof
         foreach ($Group in $Groups) {
         Add-ADGroupMember -Identity $Group -Members $Sam.sAMAccountName
@@ -140,6 +160,9 @@ Function Set-Permissions {
 `r`n $($sam.sAMAccountName) added group $Grp")
         }
     }
+if($ERROR.count -ne 0){
+$ERROR | Out-File $Log -Append
+}
 }
 
 
@@ -207,11 +230,11 @@ $Reference_CB.Font               = 'Microsoft Sans Serif,9'
 $Reference_CB.DropDownStyle       = "DropDownList"
 $Reference_CB.Items.Add("")
 $Reference_CB.Items.Add("CUSTOM")
-$Reference_CB.Items.Add("RU_21XXX")
-$Reference_CB.Items.Add("RU_9XXXX")
-$Reference_CB.Items.Add("RU_21530")
-$Reference_CB.Items.Add("RU_21070")
-$Reference_CB.Items.Add("RU_34100")
+$Reference_CB.Items.Add("REFUSER1")
+$Reference_CB.Items.Add("REFUSER2")
+$Reference_CB.Items.Add("REFUSER3")
+$Reference_CB.Items.Add("REFUSER4")
+$Reference_CB.Items.Add("REFUSER5")
 $Reference_CB.SelectedIndex = 0
 
 $ChangeOU_BT                     = New-Object system.Windows.Forms.Button
@@ -221,7 +244,7 @@ $ChangeOU_BT.height              = 30
 $ChangeOU_BT.location            = New-Object System.Drawing.Point(290,14)
 $ChangeOU_BT.Font                = 'Microsoft Sans Serif,9'
 $ChangeOU_BT.Add_Click({
-
+$ERROR.Clear()
 ###################################################################################################
 ##################################### Functions ###################################################
 ###################################################################################################
@@ -272,13 +295,15 @@ $ErrorOK_BT.Add_Click({ $ERRORForm.Tag = $null; $ERRORForm.Close() })
 
 $ERRORForm.controls.AddRange(@($Label_ERROR,$ErrorOK_BT))
 $ERRORForm.ShowDialog()
-$OUListBox1.AppendText("
-`r`n $($_.Exception.Message)")
+$ERROR.Exception.Message | Out-File -FilePath $log -Append
 }
 	if($ERROR -eq $null -or $ERRO -eq ""){
 	$OUListBox1.AppendText("
 `r`n User moved to OU: $SOU.")
 	}
+if($ERROR.count -ne 0){
+$ERROR | Out-File $Log -Append
+}
 }
 
 ###################################################################################################
@@ -370,11 +395,19 @@ $SetAdUserProperties_BT.Add_Click({
 ###################################################################################################
 
 Function Disable-User {
+$ERROR.Clear()
 Disable-ADAccount -Identity $sam.SamAccountName
+if($ERROR.count -ne 0){
+$ERROR | Out-File $Log -Append
+}
 }
 
 Function Enable-User {
+$ERROR.Clear()
 Enable-ADAccount -Identity $sam.SamAccountName
+if($ERROR.count -ne 0){
+$ERROR | Out-File $Log -Append
+}
 }
 
 ###################################################################################################
@@ -399,6 +432,7 @@ $CommonAtr_BT.Add_Click({
 ###################################################################################################
 
 Function Change-Common-Atr {
+$ERROR.Clear()
     if($Givenname_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -GivenName $Givenname_TB.Text
 	$ListBox1.Items.Add("
@@ -420,9 +454,13 @@ Function Change-Common-Atr {
 `r`n DisplayName changed to $($DisplayName_TB.Text)")
     }
     
+if($ERROR.count -ne 0){
+$ERROR | Out-File $Log -Append
+}
 }
 
 Function Change-Other-Atr {
+$ERROR.Clear()
 try{
     if($Mail_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -Mail $Mail_TB.Text
@@ -464,6 +502,9 @@ $OK_BT.Add_Click({ $ERRORForm.Tag = $null; $ERRORForm.Close() })
 $ERRORForm.controls.AddRange(@($Label_ERROR,$OK_BT))
 $ERRORForm.ShowDialog()
  }
+if($ERROR.count -ne 0){
+$ERROR | Out-File $Log -Append
+}
 }
 
 ###################################################################################################
@@ -646,6 +687,7 @@ $OganisationAtr_BT.Add_Click({
 ####################################### Functions #################################################
 ###################################################################################################
 Function Change-Organisation_Atr {
+$ERROR.Clear()
 try{
     if($Title_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -Title $Title_TB.Text
@@ -692,6 +734,9 @@ $OK_BT.Add_Click({ $ERRORForm.Tag = $null; $ERRORForm.Close() })
 $ERRORForm.controls.AddRange(@($Label_ERROR,$OK_BT))
 $ERRORForm.ShowDialog()
  }
+if($ERROR.count -ne 0){
+$ERROR | Out-File $Log -Append
+}
 }
 
 
@@ -822,6 +867,7 @@ $ProfilePath_BT.Add_Click({
 ###################################################################################################
 
 Function change-ProfilePaths {
+$Error.Clear()
 try{
     if($ProfilePath_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -ProfilePath $ProfilePath_TB.Text
@@ -863,6 +909,9 @@ $OK_BT.Add_Click({ $ERRORForm.Tag = $null; $ERRORForm.Close() })
 $ERRORForm.controls.AddRange(@($Label_ERROR,$OK_BT))
 $ERRORForm.ShowDialog()
  }
+if($ERROR.count -ne 0){
+$ERROR | Out-File $Log -Append
+}
 }
 
 ###################################################################################################
@@ -990,6 +1039,7 @@ $Change_TS_BT.Font               = 'Microsoft Sans Serif,9'
 $Change_TS_BT.Add_Click({
 
 function Set-TSPro-and-Home {
+$Error.Clear()
 $TSProfilePath = $TSHome_TB.Text
 $TSHomeDirectory = $TSProfile_TB.Text
 $TSHomeDrive = "H:" 
@@ -1025,6 +1075,9 @@ $OK_BT.Add_Click({ $ERRORForm.Tag = $null; $ERRORForm.Close() })
 $ERRORForm.controls.AddRange(@($Label_ERROR,$OK_BT))
 $ERRORForm.ShowDialog()
     }
+if($ERROR.count -ne 0){
+$ERROR | Out-File $Log -Append
+}
 }
 
 
