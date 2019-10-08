@@ -1,4 +1,4 @@
-﻿###################################################################################################
+###################################################################################################
 ################################### Initialisations ###############################################
 ###################################################################################################
 
@@ -95,7 +95,7 @@ Function Set-Permissions {
 `r`n $($sam.sAMAccountName) added group $Grp")
         }
     }
-    elseif($Reference_CB.Text -eq "REFUSER1"){
+    elseif($Reference_CB.Text -eq "RU_21XXX"){
     $Groups = Get-ADUser -Identity $Reference_CB.Text -Properties memberof | Select-Object -ExpandProperty memberof
         foreach ($Group in $Groups) {
         Add-ADGroupMember -Identity $Group -Members $Sam.sAMAccountName
@@ -104,7 +104,7 @@ Function Set-Permissions {
 `r`n $($sam.sAMAccountName) added group $Grp")
         }
     }
-    elseif($Reference_CB.Text -eq "REFUSER2"){
+    elseif($Reference_CB.Text -eq "RU_9XXXX"){
     $Groups = Get-ADUser -Identity $Reference_CB.Text -Properties memberof | Select-Object -ExpandProperty memberof
         foreach ($Group in $Groups) {
         Add-ADGroupMember -Identity $Group -Members $Sam.sAMAccountName
@@ -113,7 +113,7 @@ Function Set-Permissions {
 `r`n $($sam.sAMAccountName) added group $Grp")
         }
     }
-    elseif($Reference_CB.Text -eq "REFUSER3"){
+    elseif($Reference_CB.Text -eq "RU_21530"){
     $Groups = Get-ADUser -Identity $Reference_CB.Text -Properties memberof | Select-Object -ExpandProperty memberof
         foreach ($Group in $Groups) {
         Add-ADGroupMember -Identity $Group -Members $Sam.sAMAccountName
@@ -122,7 +122,7 @@ Function Set-Permissions {
 `r`n $($sam.sAMAccountName) added group $Grp")
         }
     }
-    elseif($Reference_CB.Text -eq "REFUSER4"){
+    elseif($Reference_CB.Text -eq "RU_21070"){
     $Groups = Get-ADUser -Identity $Reference_CB.Text -Properties memberof | Select-Object -ExpandProperty memberof
         foreach ($Group in $Groups) {
         Add-ADGroupMember -Identity $Group -Members $Sam.sAMAccountName
@@ -131,7 +131,7 @@ Function Set-Permissions {
 `r`n $($sam.sAMAccountName) added group $Grp")
         }
     }
-    elseif($Reference_CB.Text -eq "REFUSER5"){
+    elseif($Reference_CB.Text -eq "RU_34100"){
     $Groups = Get-ADUser -Identity $Reference_CB.Text -Properties memberof | Select-Object -ExpandProperty memberof
         foreach ($Group in $Groups) {
         Add-ADGroupMember -Identity $Group -Members $Sam.sAMAccountName
@@ -207,11 +207,11 @@ $Reference_CB.Font               = 'Microsoft Sans Serif,9'
 $Reference_CB.DropDownStyle       = "DropDownList"
 $Reference_CB.Items.Add("")
 $Reference_CB.Items.Add("CUSTOM")
-$Reference_CB.Items.Add("REFUSER1")
-$Reference_CB.Items.Add("REFUSER2")
-$Reference_CB.Items.Add("REFUSER3")
-$Reference_CB.Items.Add("REFUSER4")
-$Reference_CB.Items.Add("REFUSER5")
+$Reference_CB.Items.Add("RU_21XXX")
+$Reference_CB.Items.Add("RU_9XXXX")
+$Reference_CB.Items.Add("RU_21530")
+$Reference_CB.Items.Add("RU_21070")
+$Reference_CB.Items.Add("RU_34100")
 $Reference_CB.SelectedIndex = 0
 
 $ChangeOU_BT                     = New-Object system.Windows.Forms.Button
@@ -513,6 +513,13 @@ $Label_GivenName.height          = 10
 $Label_GivenName.location        = New-Object System.Drawing.Point(31,35)
 $Label_GivenName.Font            = 'Microsoft Sans Serif,10'
 
+$Label_Info                 = New-Object system.Windows.Forms.Label
+$Label_Info.text            = "Blank fields are ignored!"
+$Label_Info.AutoSize        = $true
+$Label_Info.width           = 25
+$Label_Info.height          = 10
+$Label_Info.location        = New-Object System.Drawing.Point(200,200)
+$Label_Info.Font            = 'Microsoft Sans Serif,10'
 
 $Label_Surname                   = New-Object system.Windows.Forms.Label
 $Label_Surname.text              = "Surname"
@@ -618,7 +625,7 @@ $Name_GB.width                   = 363
 $Name_GB.text                    = "Name"
 $Name_GB.location                = New-Object System.Drawing.Point(7,20)
 
-$CommonForm.controls.AddRange(@($CommonRun_BT,$CommonRun2_BT))
+$CommonForm.controls.AddRange(@($CommonRun_BT,$CommonRun2_BT,$Label_Info))
 $CommonForm.controls.AddRange(@($Other_GB,$Givenname_TB,$Label_GivenName,$Label_Surname,$SurName_TB,$Label_Name,$Name_TB,$Label_DisplayName,$DisplayName_TB,$Common_Cancel_BT,$Name_GB))
 $Other_GB.controls.AddRange(@($Label_Mail,$Mail_TB,$Label_OfficePhone,$OfficePhone_TB,$Label_Description,$Description_TB))
 
@@ -697,6 +704,14 @@ $OrganisationForm                            = New-Object system.Windows.Forms.F
 $OrganisationForm.ClientSize                 = '400,290'
 $OrganisationForm.text                       = "Organisation"
 $OrganisationForm.TopMost                    = $false
+
+$Label_Info                 = New-Object system.Windows.Forms.Label
+$Label_Info.text            = "Blank fields are ignored!"
+$Label_Info.AutoSize        = $true
+$Label_Info.width           = 25
+$Label_Info.height          = 10
+$Label_Info.location        = New-Object System.Drawing.Point(200,200)
+$Label_Info.Font            = 'Microsoft Sans Serif,10'
 
 $OrganisationRun_BT              = New-Object system.Windows.Forms.Button
 $OrganisationRun_BT.text         = "Run"
@@ -789,7 +804,7 @@ $Manager_TB.height               = 20
 $Manager_TB.location             = New-Object System.Drawing.Point(13,254)
 $Manager_TB.Font                 = 'Microsoft Sans Serif,10'
 
-$OrganisationForm.controls.AddRange(@($OrganisationRun_BT,$OrganisationCancel_BT,$Title_TB,$Label_Title,$Label_Office,$Office_TB,$LabelCompany,$Company_TB,$Label_Department,$Department_TB,$Label_Manager,$Manager_TB))
+$OrganisationForm.controls.AddRange(@($Label_info,$OrganisationRun_BT,$OrganisationCancel_BT,$Title_TB,$Label_Title,$Label_Office,$Office_TB,$LabelCompany,$Company_TB,$Label_Department,$Department_TB,$Label_Manager,$Manager_TB))
 
 
 $OrganisationForm.ShowDialog()
@@ -913,6 +928,14 @@ $ProfilePathsRun_BT.location     = New-Object System.Drawing.Point(280,32)
 $ProfilePathsRun_BT.Font         = 'Microsoft Sans Serif,10'
 $ProfilePathsRun_BT.Add_Click({ change-ProfilePaths })
 
+$Label_Info                 = New-Object system.Windows.Forms.Label
+$Label_Info.text            = "Blank fields are ignored!"
+$Label_Info.AutoSize        = $true
+$Label_Info.width           = 25
+$Label_Info.height          = 10
+$Label_Info.location        = New-Object System.Drawing.Point(200,150)
+$Label_Info.Font            = 'Microsoft Sans Serif,10'
+
 $ProfilePathsCancel_BT            = New-Object system.Windows.Forms.Button
 $ProfilePathsCancel_BT.text       = "Cancel"
 $ProfilePathsCancel_BT.width      = 60
@@ -921,7 +944,7 @@ $ProfilePathsCancel_BT.location   = New-Object System.Drawing.Point(280,84)
 $ProfilePathsCancel_BT.Font       = 'Microsoft Sans Serif,10'
 $ProfilePathsCancel_BT.Add_Click({ $ProfilePathForm.Tag = $null; $ProfilePathForm.Close() })
 
-$ProfilePathForm.controls.AddRange(@($Label_ProfilePath,$ProfilePath_TB,$Label_HomeDrive,$HomeDrive_TB,$Label_HomeDirectory,$HomeDirectory_TB,$ProfilePathsRun_BT,$ProfilePathsCancel_BT))
+$ProfilePathForm.controls.AddRange(@($Label_info,$Label_ProfilePath,$ProfilePath_TB,$Label_HomeDrive,$HomeDrive_TB,$Label_HomeDirectory,$HomeDirectory_TB,$ProfilePathsRun_BT,$ProfilePathsCancel_BT))
 
 $ProfilePathForm.ShowDialog()
 
@@ -991,7 +1014,7 @@ $Label_ERROR.height              = 10
 $Label_ERROR.location            = New-Object System.Drawing.Point(40,45)
 $Label_ERROR.Font                = 'Microsoft Sans Serif,10,style=Bold'
 
-$OK_BT                           = New-Object       = New-Object system.Windows.Forms.Button
+$OK_BT                           = New-Object system.Windows.Forms.Button
 $OK_BT.text                      = "OK"
 $OK_BT.width                     = 60
 $OK_BT.height                    = 30
