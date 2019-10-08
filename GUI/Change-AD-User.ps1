@@ -1115,6 +1115,7 @@ $ListBox1.Height = 230
 $ListBox1.location = new-object system.drawing.point(15,450)
 $ListBox1.Font = "Microsoft Sans Serif,8"
 $ListBox1.ScrollAlwaysVisible = $true
+$ListBox1.SelectedIndex = -1
 
 $Form.controls.AddRange(@($SetPermissions_GB,$SetAdUserProperties_BT,$Change_TS_BT,$GetUserProperties_BT,$GetUser_BT,$Cancel_BT,$Change_Properties_GB,$GetADUser_GB,$Clear_BT,$ListBox1))
 $GetADUser_GB.controls.AddRange(@($sAMAccountName_TB,$Label_Sam))
