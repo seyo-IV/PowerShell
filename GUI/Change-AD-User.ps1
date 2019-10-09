@@ -231,10 +231,10 @@ $Reference_CB.DropDownStyle       = "DropDownList"
 $Reference_CB.Items.Add("")
 $Reference_CB.Items.Add("CUSTOM")
 $Reference_CB.Items.Add("REFUSER1")
-$Reference_CB.Items.Add("REFUSER2")
-$Reference_CB.Items.Add("REFUSER3")
-$Reference_CB.Items.Add("REFUSER4")
-$Reference_CB.Items.Add("REFUSER5")
+$Reference_CB.Items.Add("REFUSER1")
+$Reference_CB.Items.Add("REFUSER1")
+$Reference_CB.Items.Add("REFUSER1")
+$Reference_CB.Items.Add("REFUSER1")
 $Reference_CB.SelectedIndex = 0
 
 $ChangeOU_BT                     = New-Object system.Windows.Forms.Button
@@ -272,30 +272,9 @@ $GOU  = (Get-ADUser -Identity $sam.sAMAccountName).DistinguishedName
 try{
 Move-ADObject -Identity $GOU -TargetPath $TargetOU
 }catch{
-$ERRORForm                            = New-Object system.Windows.Forms.Form
-$ERRORForm.ClientSize                 = '197,130'
-$ERRORForm.text                       = "ERROR"
-$ERRORForm.TopMost                    = $false
+[System.Windows.Forms.MessageBox]::Show('An error occurred!
+See logs for more info.', 'Error', 'Ok', 'Error')
 
-$Label_ERROR                     = New-Object system.Windows.Forms.Label
-$Label_ERROR.text                = "An ERROR occured!"
-$Label_ERROR.AutoSize            = $true
-$Label_ERROR.width               = 25
-$Label_ERROR.height              = 10
-$Label_ERROR.location            = New-Object System.Drawing.Point(40,45)
-$Label_ERROR.Font                = 'Microsoft Sans Serif,10,style=Bold'
-
-$ErrorOK_BT                           = New-Object system.Windows.Forms.Button
-$ErrorOK_BT.text                      = "OK"
-$ErrorOK_BT.width                     = 60
-$ErrorOK_BT.height                    = 30
-$ErrorOK_BT.location                  = New-Object System.Drawing.Point(64,85)
-$ErrorOK_BT.Font                      = 'Microsoft Sans Serif,10'
-$ErrorOK_BT.Add_Click({ $ERRORForm.Tag = $null; $ERRORForm.Close() })
-
-$ERRORForm.controls.AddRange(@($Label_ERROR,$ErrorOK_BT))
-$ERRORForm.ShowDialog()
-$ERROR.Exception.Message | Out-File -FilePath $log -Append
 }
 	if($ERROR -eq $null -or $ERRO -eq ""){
 	$OUListBox1.AppendText("
@@ -478,29 +457,8 @@ try{
 `r`n Description changed to $($Description_TB.Text)")
     }
  }catch{
-$ERRORForm                            = New-Object system.Windows.Forms.Form
-$ERRORForm.ClientSize                 = '197,130'
-$ERRORForm.text                       = "ERROR"
-$ERRORForm.TopMost                    = $false
-
-$Label_ERROR                     = New-Object system.Windows.Forms.Label
-$Label_ERROR.text                = "An ERROR occured!"
-$Label_ERROR.AutoSize            = $true
-$Label_ERROR.width               = 25
-$Label_ERROR.height              = 10
-$Label_ERROR.location            = New-Object System.Drawing.Point(40,45)
-$Label_ERROR.Font                = 'Microsoft Sans Serif,10,style=Bold'
-
-$OK_BT                           = New-Object system.Windows.Forms.Button
-$OK_BT.text                      = "OK"
-$OK_BT.width                     = 60
-$OK_BT.height                    = 30
-$OK_BT.location                  = New-Object System.Drawing.Point(64,85)
-$OK_BT.Font                      = 'Microsoft Sans Serif,10'
-$OK_BT.Add_Click({ $ERRORForm.Tag = $null; $ERRORForm.Close() })
-
-$ERRORForm.controls.AddRange(@($Label_ERROR,$OK_BT))
-$ERRORForm.ShowDialog()
+[System.Windows.Forms.MessageBox]::Show('An error occurred!
+See logs for more info.', 'Error', 'Ok', 'Error')
  }
 if($ERROR.count -ne 0){
 $ERROR | Out-File $Log -Append
@@ -710,29 +668,8 @@ try{
 `r`n Department changed to $($Department_TB.Text)")
     }
  }catch{
-$ERRORForm                            = New-Object system.Windows.Forms.Form
-$ERRORForm.ClientSize                 = '197,130'
-$ERRORForm.text                       = "ERROR"
-$ERRORForm.TopMost                    = $false
-
-$Label_ERROR                     = New-Object system.Windows.Forms.Label
-$Label_ERROR.text                = "An ERROR occured!"
-$Label_ERROR.AutoSize            = $true
-$Label_ERROR.width               = 25
-$Label_ERROR.height              = 10
-$Label_ERROR.location            = New-Object System.Drawing.Point(40,45)
-$Label_ERROR.Font                = 'Microsoft Sans Serif,10,style=Bold'
-
-$OK_BT                           = New-Object system.Windows.Forms.Button
-$OK_BT.text                      = "OK"
-$OK_BT.width                     = 60
-$OK_BT.height                    = 30
-$OK_BT.location                  = New-Object System.Drawing.Point(64,85)
-$OK_BT.Font                      = 'Microsoft Sans Serif,10'
-$OK_BT.Add_Click({ $ERRORForm.Tag = $null; $ERRORForm.Close() })
-
-$ERRORForm.controls.AddRange(@($Label_ERROR,$OK_BT))
-$ERRORForm.ShowDialog()
+[System.Windows.Forms.MessageBox]::Show('An error occurred!
+See logs for more info.', 'Error', 'Ok', 'Error')
  }
 if($ERROR.count -ne 0){
 $ERROR | Out-File $Log -Append
@@ -885,29 +822,8 @@ try{
 `r`n HomeDirectory changed to $($HomeDirectory_TB.Text)")
     }
  }catch{
-$ERRORForm                            = New-Object system.Windows.Forms.Form
-$ERRORForm.ClientSize                 = '197,130'
-$ERRORForm.text                       = "ERROR"
-$ERRORForm.TopMost                    = $false
-
-$Label_ERROR                     = New-Object system.Windows.Forms.Label
-$Label_ERROR.text                = "An ERROR occured!"
-$Label_ERROR.AutoSize            = $true
-$Label_ERROR.width               = 25
-$Label_ERROR.height              = 10
-$Label_ERROR.location            = New-Object System.Drawing.Point(40,45)
-$Label_ERROR.Font                = 'Microsoft Sans Serif,10,style=Bold'
-
-$OK_BT                           = New-Object system.Windows.Forms.Button
-$OK_BT.text                      = "OK"
-$OK_BT.width                     = 60
-$OK_BT.height                    = 30
-$OK_BT.location                  = New-Object System.Drawing.Point(64,85)
-$OK_BT.Font                      = 'Microsoft Sans Serif,10'
-$OK_BT.Add_Click({ $ERRORForm.Tag = $null; $ERRORForm.Close() })
-
-$ERRORForm.controls.AddRange(@($Label_ERROR,$OK_BT))
-$ERRORForm.ShowDialog()
+[System.Windows.Forms.MessageBox]::Show('An error occurred!
+See logs for more info.', 'Error', 'Ok', 'Error')
  }
 if($ERROR.count -ne 0){
 $ERROR | Out-File $Log -Append
@@ -1049,31 +965,10 @@ $ADSIUserObject.InvokeSet('TerminalServicesProfilePath',$TSProfilePath)
 $ADSIUserObject.InvokeSet('TerminalServicesHomeDirectory',$TSHomeDirectory)
 $ADSIUserObject.InvokeSet('TerminalServicesHomeDrive',$TSHomeDrive)
 try{
-    $ADSIUserObject.SetInfo()}catch{
+$ADSIUserObject.SetInfo()}catch{
 
-$ERRORForm                            = New-Object system.Windows.Forms.Form
-$ERRORForm.ClientSize                 = '197,130'
-$ERRORForm.text                       = "ERROR"
-$ERRORForm.TopMost                    = $false
-
-$Label_ERROR                     = New-Object system.Windows.Forms.Label
-$Label_ERROR.text                = "An ERROR occured!"
-$Label_ERROR.AutoSize            = $true
-$Label_ERROR.width               = 25
-$Label_ERROR.height              = 10
-$Label_ERROR.location            = New-Object System.Drawing.Point(40,45)
-$Label_ERROR.Font                = 'Microsoft Sans Serif,10,style=Bold'
-
-$OK_BT                           = New-Object system.Windows.Forms.Button
-$OK_BT.text                      = "OK"
-$OK_BT.width                     = 60
-$OK_BT.height                    = 30
-$OK_BT.location                  = New-Object System.Drawing.Point(64,85)
-$OK_BT.Font                      = 'Microsoft Sans Serif,10'
-$OK_BT.Add_Click({ $ERRORForm.Tag = $null; $ERRORForm.Close() })
-
-$ERRORForm.controls.AddRange(@($Label_ERROR,$OK_BT))
-$ERRORForm.ShowDialog()
+[System.Windows.Forms.MessageBox]::Show('An error occurred!
+See logs for more info.', 'Error', 'Ok', 'Error')
     }
 if($ERROR.count -ne 0){
 $ERROR | Out-File $Log -Append
@@ -1126,15 +1021,15 @@ $TSHome_TB.height                = 20
 $TSHome_TB.location              = New-Object System.Drawing.Point(35,105)
 $TSHome_TB.Font                  = 'Microsoft Sans Serif,10'
 
-$Label_Homedirecotry             = New-Object system.Windows.Forms.Label
-$Label_Homedirecotry.text        = "Home Directory"
-$Label_Homedirecotry.AutoSize    = $true
-$Label_Homedirecotry.width       = 25
-$Label_Homedirecotry.height      = 10
-$Label_Homedirecotry.location    = New-Object System.Drawing.Point(41,81)
-$Label_Homedirecotry.Font        = 'Microsoft Sans Serif,10'
+$Label_HomeDirectory             = New-Object system.Windows.Forms.Label
+$Label_HomeDirectory.text        = "Home Directory"
+$Label_HomeDirectory.AutoSize    = $true
+$Label_HomeDirectory.width       = 25
+$Label_HomeDirectory.height      = 10
+$Label_HomeDirectory.location    = New-Object System.Drawing.Point(41,81)
+$Label_HomeDirectory.Font        = 'Microsoft Sans Serif,10'
 
-$TSForm.controls.AddRange(@($TSRun_BT,$TsCancel_BT,$TSProfile_TB,$Label_TSProfile,$TSHome_TB,$Label_Homedirecotry))
+$TSForm.controls.AddRange(@($TSRun_BT,$TsCancel_BT,$TSProfile_TB,$Label_TSProfile,$TSHome_TB,$Label_HomeDirectory))
 
 
 $TSForm.ShowDialog()
