@@ -231,10 +231,10 @@ $Reference_CB.DropDownStyle       = "DropDownList"
 $Reference_CB.Items.Add("")
 $Reference_CB.Items.Add("CUSTOM")
 $Reference_CB.Items.Add("REFUSER1")
-$Reference_CB.Items.Add("REFUSER1")
-$Reference_CB.Items.Add("REFUSER1")
-$Reference_CB.Items.Add("REFUSER1")
-$Reference_CB.Items.Add("REFUSER1")
+$Reference_CB.Items.Add("REFUSER2")
+$Reference_CB.Items.Add("REFUSER3")
+$Reference_CB.Items.Add("REFUSER4")
+$Reference_CB.Items.Add("REFUSER5")
 $Reference_CB.SelectedIndex = 0
 
 $ChangeOU_BT                     = New-Object system.Windows.Forms.Button
@@ -412,27 +412,28 @@ $CommonAtr_BT.Add_Click({
 
 Function Change-Common-Atr {
 $ERROR.Clear()
+try{
     if($Givenname_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -GivenName $Givenname_TB.Text
-	$ListBox1.Items.Add("
-`r`n GiveName changed to $($Givenname_TB.Text)")
     }
+
     if($SurName_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -Surname $SurName_TB.Text
-	$ListBox1.Items.Add("
-`r`n Surname changed to $($SurName_TB.Text)")
     }
     if($Name_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -Add @{Name=$Name_TB.Text}
-	$ListBox1.Items.Add("
-`r`n Name changed to $($Name_TB.Text)")
     }
     if($DisplayName_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -DisplayName $DisplayName_TB.Text
-	$ListBox1.Items.Add("
-`r`n DisplayName changed to $($DisplayName_TB.Text)")
     }
-    
+}catch{
+[System.Windows.Forms.MessageBox]::Show('An error occurred!
+See logs for more info.', 'Error', 'Ok', 'Error')
+}
+    if($ERROR.count -eq 0){
+    $ListBox1.Items.Add("
+`r`n Property cahnged successfully")
+    }   
 if($ERROR.count -ne 0){
 $ERROR | Out-File $Log -Append
 }
@@ -443,23 +444,21 @@ $ERROR.Clear()
 try{
     if($Mail_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -Mail $Mail_TB.Text
-	$ListBox1.Items.Add("
-`r`n Mail changed to $($Mail_TB.Text)")
     }
     if($OfficePhone_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -OfficePhone $OfficePhone_TB.Text
-	$ListBox1.Items.Add("
-`r`n Phone changed to $($OfficePhone_TB.Text)")
     }
     if($Description_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -Description $Description_TB.Text
-	$ListBox1.Items.Add("
-`r`n Description changed to $($Description_TB.Text)")
     }
  }catch{
 [System.Windows.Forms.MessageBox]::Show('An error occurred!
 See logs for more info.', 'Error', 'Ok', 'Error')
  }
+    if($ERROR.count -eq 0){
+    $ListBox1.Items.Add("
+`r`n Property cahnged successfully")
+    }
 if($ERROR.count -ne 0){
 $ERROR | Out-File $Log -Append
 }
@@ -649,28 +648,27 @@ $ERROR.Clear()
 try{
     if($Title_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -Title $Title_TB.Text
-	$ListBox1.Items.Add("
-`r`n Title changed to $($Title_TB.Text)")
+	
     }
     if($Office_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -Office $Office_TB.Text
-	$ListBox1.Items.Add("
-`r`n Office changed to $($Office_TB.Text)")
+	
     }
     if($Company_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -Company $Company_TB.Text
-	$ListBox1.Items.Add("
-`r`n Company changed to $($Company_TB.Text)")
+	
     }
     if($Department_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -Department $Department_TB.Text
-	$ListBox1.Items.Add("
-`r`n Department changed to $($Department_TB.Text)")
     }
  }catch{
 [System.Windows.Forms.MessageBox]::Show('An error occurred!
 See logs for more info.', 'Error', 'Ok', 'Error')
  }
+    if($ERROR.count -eq 0){
+    $ListBox1.Items.Add("
+`r`n Property cahnged successfully")
+    }
 if($ERROR.count -ne 0){
 $ERROR | Out-File $Log -Append
 }
@@ -808,23 +806,25 @@ $Error.Clear()
 try{
     if($ProfilePath_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -ProfilePath $ProfilePath_TB.Text
-	$ListBox1.Items.Add("
-`r`n ProfilePath changed to $($ProfilePath_TB.Text)")
+	
     }
     if($HomeDrive_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -HomeDrive $HomeDrive_TB.Text
-	$ListBox1.Items.Add("
-`r`n HomeDrive changed to $($HomeDrive_TB.Text)")
+	
     }
     if($HomeDirectory_TB.Text -ne ""){
     Set-ADUser -Identity $sam.SamAccountName -HomeDirectory $HomeDirectory_TB.Text
-	$ListBox1.Items.Add("
-`r`n HomeDirectory changed to $($HomeDirectory_TB.Text)")
+	
     }
  }catch{
 [System.Windows.Forms.MessageBox]::Show('An error occurred!
 See logs for more info.', 'Error', 'Ok', 'Error')
  }
+    
+    if($ERROR.count -eq 0){
+    $ListBox1.Items.Add("
+`r`n Property cahnged successfully")
+    }
 if($ERROR.count -ne 0){
 $ERROR | Out-File $Log -Append
 }
@@ -969,6 +969,10 @@ $ADSIUserObject.SetInfo()}catch{
 
 [System.Windows.Forms.MessageBox]::Show('An error occurred!
 See logs for more info.', 'Error', 'Ok', 'Error')
+    }
+    if($ERROR.count -eq 0){
+    $ListBox1.Items.Add("
+`r`n TS-Paths cahnged successfully")
     }
 if($ERROR.count -ne 0){
 $ERROR | Out-File $Log -Append
