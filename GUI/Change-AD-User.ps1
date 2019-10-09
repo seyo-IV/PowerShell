@@ -1010,6 +1010,14 @@ $TSProfile_TB.height             = 20
 $TSProfile_TB.location           = New-Object System.Drawing.Point(35,55)
 $TSProfile_TB.Font               = 'Microsoft Sans Serif,10'
 
+$Label_Info                 = New-Object system.Windows.Forms.Label
+$Label_Info.text            = "Blank fields are ignored"
+$Label_Info.AutoSize        = $true
+$Label_Info.width           = 25
+$Label_Info.height          = 10
+$Label_Info.location        = New-Object System.Drawing.Point(150,100)
+$Label_Info.Font            = 'Microsoft Sans Serif,10'
+
 $Label_TSProfile                 = New-Object system.Windows.Forms.Label
 $Label_TSProfile.text            = "TS-Profile"
 $Label_TSProfile.AutoSize        = $true
@@ -1033,7 +1041,7 @@ $Label_HomeDirectory.height      = 10
 $Label_HomeDirectory.location    = New-Object System.Drawing.Point(41,81)
 $Label_HomeDirectory.Font        = 'Microsoft Sans Serif,10'
 
-$TSForm.controls.AddRange(@($TSRun_BT,$TsCancel_BT,$TSProfile_TB,$Label_TSProfile,$TSHome_TB,$Label_HomeDirectory))
+$TSForm.controls.AddRange(@($TSRun_BT,$TsCancel_BT,$TSProfile_TB,$Label_TSProfile,$TSHome_TB,$Label_HomeDirectory,$Label_Info))
 
 
 $TSForm.ShowDialog()
