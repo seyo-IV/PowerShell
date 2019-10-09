@@ -256,12 +256,12 @@ $SOU  = (Get-ADOrganizationalUnit -LDAPFilter "(name=$($OUName.Text)*)" -SearchB
     if($SOU.Count -gt 1){
     $OUListBox1.Clear()
     $OUListBox1.AppendText("
-`r`n More than one OU was Found! Please be more specific!")}
+`r`n More than one OU was found! Please be more specific!")}
     else{
     $OUListBox1.Clear()
     $OUsName = $SOU -split "," | Select-Object -First 1
     $OUListBox1.AppendText("
-`r`n $OUsName was Found!")
+`r`n $OUsName was found!")
     }
     }
 }
@@ -432,7 +432,7 @@ See logs for more info.', 'Error', 'Ok', 'Error')
 }
     if($ERROR.count -eq 0){
     $ListBox1.Items.Add("
-`r`n Property cahnged successfully")
+`r`n Property changed successfully")
     }   
 if($ERROR.count -ne 0){
 $ERROR | Out-File $Log -Append
@@ -457,7 +457,7 @@ See logs for more info.', 'Error', 'Ok', 'Error')
  }
     if($ERROR.count -eq 0){
     $ListBox1.Items.Add("
-`r`n Property cahnged successfully")
+`r`n Property changed successfully")
     }
 if($ERROR.count -ne 0){
 $ERROR | Out-File $Log -Append
@@ -634,7 +634,7 @@ $CommonForm.ShowDialog()
 })
 
 $OganisationAtr_BT               = New-Object system.Windows.Forms.Button
-$OganisationAtr_BT.text          = "Organisation Attributes"
+$OganisationAtr_BT.text          = "Organization Attributes"
 $OganisationAtr_BT.width         = 130
 $OganisationAtr_BT.height        = 30
 $OganisationAtr_BT.location      = New-Object System.Drawing.Point(24,65)
@@ -667,7 +667,7 @@ See logs for more info.', 'Error', 'Ok', 'Error')
  }
     if($ERROR.count -eq 0){
     $ListBox1.Items.Add("
-`r`n Property cahnged successfully")
+`r`n Property changed successfully")
     }
 if($ERROR.count -ne 0){
 $ERROR | Out-File $Log -Append
@@ -682,7 +682,7 @@ $ERROR | Out-File $Log -Append
 
 $OrganisationForm                            = New-Object system.Windows.Forms.Form
 $OrganisationForm.ClientSize                 = '400,290'
-$OrganisationForm.text                       = "Organisation"
+$OrganisationForm.text                       = "Organization"
 $OrganisationForm.TopMost                    = $false
 
 $Label_Info                 = New-Object system.Windows.Forms.Label
@@ -823,7 +823,7 @@ See logs for more info.', 'Error', 'Ok', 'Error')
     
     if($ERROR.count -eq 0){
     $ListBox1.Items.Add("
-`r`n Property cahnged successfully")
+`r`n Property changed successfully")
     }
 if($ERROR.count -ne 0){
 $ERROR | Out-File $Log -Append
@@ -972,7 +972,7 @@ See logs for more info.', 'Error', 'Ok', 'Error')
     }
     if($ERROR.count -eq 0){
     $ListBox1.Items.Add("
-`r`n TS-Paths cahnged successfully")
+`r`n TS-Paths changed successfully")
     }
 if($ERROR.count -ne 0){
 $ERROR | Out-File $Log -Append
@@ -1010,14 +1010,6 @@ $TSProfile_TB.height             = 20
 $TSProfile_TB.location           = New-Object System.Drawing.Point(35,55)
 $TSProfile_TB.Font               = 'Microsoft Sans Serif,10'
 
-$Label_Info                 = New-Object system.Windows.Forms.Label
-$Label_Info.text            = "Blank fields are ignored"
-$Label_Info.AutoSize        = $true
-$Label_Info.width           = 25
-$Label_Info.height          = 10
-$Label_Info.location        = New-Object System.Drawing.Point(150,100)
-$Label_Info.Font            = 'Microsoft Sans Serif,10'
-
 $Label_TSProfile                 = New-Object system.Windows.Forms.Label
 $Label_TSProfile.text            = "TS-Profile"
 $Label_TSProfile.AutoSize        = $true
@@ -1025,6 +1017,14 @@ $Label_TSProfile.width           = 25
 $Label_TSProfile.height          = 10
 $Label_TSProfile.location        = New-Object System.Drawing.Point(41,30)
 $Label_TSProfile.Font            = 'Microsoft Sans Serif,10'
+
+$Label_Info                 = New-Object system.Windows.Forms.Label
+$Label_Info.text            = "Blank fields are ignored"
+$Label_Info.AutoSize        = $true
+$Label_Info.width           = 25
+$Label_Info.height          = 10
+$Label_Info.location        = New-Object System.Drawing.Point(150,100)
+$Label_Info.Font            = 'Microsoft Sans Serif,10'
 
 $TSHome_TB                       = New-Object system.Windows.Forms.TextBox
 $TSHome_TB.multiline             = $false
