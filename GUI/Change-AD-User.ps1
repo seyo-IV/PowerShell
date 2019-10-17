@@ -1,6 +1,12 @@
 ###################################################################################################
 ################################### Initialisations ###############################################
 ###################################################################################################
+try{
+Import-Module ActiveDirectory
+}
+catch{
+[System.Windows.Forms.MessageBox]::Show('Error loading Moules!', 'Error', 'Ok', 'Error')
+}
 
 Add-Type -AssemblyName System.Windows.Forms
 [System.Windows.Forms.Application]::EnableVisualStyles()
