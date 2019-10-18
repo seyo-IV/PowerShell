@@ -5,7 +5,7 @@ try{
 Import-Module ActiveDirectory
 }
 catch{
-[System.Windows.Forms.MessageBox]::Show('Error loading Moules!', 'Error', 'Ok', 'Error')
+[System.Windows.Forms.MessageBox]::Show('Error loading Modules!', 'Error', 'Ok', 'Error')
 }
 
 Add-Type -AssemblyName System.Windows.Forms
@@ -236,11 +236,11 @@ $Reference_CB.Font               = 'Microsoft Sans Serif,9'
 $Reference_CB.DropDownStyle       = "DropDownList"
 $Reference_CB.Items.Add("")
 $Reference_CB.Items.Add("CUSTOM")
-$Reference_CB.Items.Add("REFUSER1")
 $Reference_CB.Items.Add("REFUSER2")
 $Reference_CB.Items.Add("REFUSER3")
 $Reference_CB.Items.Add("REFUSER4")
 $Reference_CB.Items.Add("REFUSER5")
+$Reference_CB.Items.Add("REFUSER6")
 $Reference_CB.SelectedIndex = 0
 
 $ChangeOU_BT                     = New-Object system.Windows.Forms.Button
@@ -256,7 +256,7 @@ $ERROR.Clear()
 ###################################################################################################
 
 function Get-UserOU {
-$SOU  = (Get-ADOrganizationalUnit -LDAPFilter "(name=$($OUName.Text)*)" -SearchBase 'OU=User,DC=domain,DC=com').DistinguishedName
+$SOU  = (Get-ADOrganizationalUnit -LDAPFilter "(name=$($OUName.Text)*)").DistinguishedName
     if($SOU){
     $Global:TargetOU = $SOU
     if($SOU.Count -gt 1){
@@ -1078,6 +1078,18 @@ $Cancel_BT.location              = New-Object System.Drawing.Point(481,88)
 $Cancel_BT.Font                  = 'Microsoft Sans Serif,9'
 $Cancel_BT.Add_Click({ $Form.Tag = $null; $Form.Close() })
 
+$Search_BT                       = New-Object system.Windows.Forms.Button
+$Search_BT.text                  = "Search User"
+$Search_BT.width                 = 100
+$Search_BT.height                = 30
+$Search_BT.location              = New-Object System.Drawing.Point(18,80)
+$Search_BT.Font                  = 'Microsoft Sans Serif,9'
+$Search_BT.Add_Click({
+		$cmd="$env:windir\system32\rundll32.exe"
+		$param="dsquery.dll,OpenQueryWindow"
+		Start-Process $cmd $param
+})
+
 $Change_Properties_GB            = New-Object system.Windows.Forms.Groupbox
 $Change_Properties_GB.height     = 111
 $Change_Properties_GB.width      = 415
@@ -1107,7 +1119,7 @@ $ListBox1.ScrollAlwaysVisible = $true
 $ListBox1.SelectedIndex = -1
 
 $Form.controls.AddRange(@($SetPermissions_GB,$SetAdUserProperties_BT,$Change_TS_BT,$GetUserProperties_BT,$GetUser_BT,$Cancel_BT,$Change_Properties_GB,$GetADUser_GB,$Clear_BT,$ListBox1))
-$GetADUser_GB.controls.AddRange(@($sAMAccountName_TB,$Label_Sam))
+$GetADUser_GB.controls.AddRange(@($sAMAccountName_TB,$Label_Sam,$Search_BT))
 $Change_Properties_GB.controls.AddRange(@($ChangeOU_BT))
 $SetPermissions_GB.controls.AddRange(@($CopyPermisions_BT,$Reference_TB,$Reference_CB))
 
