@@ -17,3 +17,5 @@
   
   For the GUIs you will need the Active Directory Module for wildcard_search.ps1 and membership.ps1.
   For GUI permissions.ps1 you wil need the NTFSSecurity Module.
+  
+  When using the "Search User" button in some GUIs you should define additional collums, like Username etc.
