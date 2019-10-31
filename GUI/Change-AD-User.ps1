@@ -1085,14 +1085,9 @@ $Search_BT.height                = 30
 $Search_BT.location              = New-Object System.Drawing.Point(18,80)
 $Search_BT.Font                  = 'Microsoft Sans Serif,9'
 $Search_BT.Add_Click({
-		$searchSam = $sAMAccountName_TB.Text
-		$output = (Get-ADUser -Filter "sAMAccountName -like '*$searchSam*'").sAMAccountName
-		$ListBox1.Items.Add("
-`r`n User found:")
-	foreach($user in $output){
-		$ListBox1.Items.Add("
-`r`n $user")
-	}
+		$cmd="$env:windir\system32\rundll32.exe"
+		$param="dsquery.dll,OpenQueryWindow"
+		Start-Process $cmd $param
 })
 
 $Change_Properties_GB            = New-Object system.Windows.Forms.Groupbox
