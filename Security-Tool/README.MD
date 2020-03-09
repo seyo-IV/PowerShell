@@ -28,7 +28,9 @@ The tool usage differs depending on what credentials you use.
  Case 2) You are a non admin user or the tool was started with non admin credentials.
 	Checking the checkbox will generate an error, since you are not an admin.
 	As a non admin user you can still login.
-	
+
+![Login GUI](https://github.com/seyo-IV/Powershell/blob/master/Security-Tool/images/SecurityApp.PNG)
+
 ### SecurityApp ###
 Explanation:
 	Credentials: You can user the credentials you granted localadmin rights to or use your admin credentials.
