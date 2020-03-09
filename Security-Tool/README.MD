@@ -18,7 +18,7 @@ I recomend to compile an exe with ps2exe https://gallery.technet.microsoft.com/s
 
 # Usage #
 
-![Login GUI](https://github.com/seyo-IV/Powershell/blob/master/Security-Tool/images/Login.PNG)
+![SecurityApp GUI](https://github.com/seyo-IV/Powershell/blob/master/Security-Tool/images/Login.PNG)
 
 ### Login ###
 The tool usage differs depending on what credentials you use.
