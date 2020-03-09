@@ -1,4 +1,4 @@
-#### Setup ####
+# Setup #
 
 ### Install ###
 0) Run [generate_Shortcuts.ps1]
@@ -13,7 +13,7 @@
 1) Run [Remove-Tools.lnk] to remove the tools that were installed to work with the Security-Tool(Chocolatey, clink).
 2) Run [Delete-Tool.lnk] to remove the Security-Tool folder and its content.
 
-##### Usage #####
+# Usage #
 
 ### Login ###
 The tool usage differs depending on what credentials you use.
