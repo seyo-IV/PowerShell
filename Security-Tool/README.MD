@@ -18,6 +18,8 @@ I recomend to compile an exe with ps2exe https://gallery.technet.microsoft.com/s
 
 # Usage #
 
+![Login GUI](/images/Login.PNG)
+
 ### Login ###
 The tool usage differs depending on what credentials you use.
  Case 1) You have global adminrights or the tool has been started with admin credentials and your account starts with "ADMINPREFIX"(Change this in [Security-Tool.ps1]), then you have permission to check the Admin checkbox.
