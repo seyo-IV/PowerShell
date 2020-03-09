@@ -32,12 +32,12 @@ The tool usage differs depending on what credentials you use. There are 2 cases.
 ![Login GUI](https://github.com/seyo-IV/Powershell/blob/master/Security-Tool/images/SecurityApp.PNG)
 
 ### SecurityApp ###
-Explanation:
+####Explanation:####
 	Credentials: You can user the credentials you granted localadmin rights to or use your admin credentials.
 	Local Admin rights or a glabl admin account are required to use the Admin checkbox and start things as admin.
 	Check Local Admin: Checks if the current logedin user has local admin rights(is in ad group).
 	
-Options:
+####Options:####
 	From the Options groupbox you can start CMD, PowerShell, Server Manager or the AD Dialog.
 	If t he Admin checkbox is checked you start PowerShell or CMD as admin.
 	All commands typed in PowerShel or CMD are logged and saved under \\SERVER\SHARE\Logs\Security-Tool ## Change this in [Security-Tool.ps1]
