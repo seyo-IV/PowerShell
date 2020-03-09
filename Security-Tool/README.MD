@@ -21,11 +21,11 @@ I recomend to compile an exe with ps2exe https://gallery.technet.microsoft.com/s
 ![SecurityApp GUI](https://github.com/seyo-IV/Powershell/blob/master/Security-Tool/images/Login.PNG)
 
 ### Login ###
-The tool usage differs depending on what credentials you use.
- Case 1) You have global adminrights or the tool has been started with admin credentials and your account starts with "ADMINPREFIX"(Change this in [Security-Tool.ps1]), then you have permission to check the Admin checkbox.
+The tool usage differs depending on what credentials you use. There are 2 cases.
+ 1) You have global adminrights or the tool has been started with admin credentials and your account starts with "ADMINPREFIX", then you have permission to check the Admin checkbox.
 	Checking the Admin Checkbox will open a new dialog and ask for a username to grant local admin right to. This process can take up to 5 minutes to finish.
 	Checkbox has to be checked before you login.
- Case 2) You are a non admin user or the tool was started with non admin credentials.
+ 2) You are a non admin user or the tool was started with non admin credentials.
 	Checking the checkbox will generate an error, since you are not an admin.
 	As a non admin user you can still login.
 
@@ -41,4 +41,4 @@ Options:
 	From the Options groupbox you can start CMD, PowerShell, Server Manager or the AD Dialog.
 	If t he Admin checkbox is checked you start PowerShell or CMD as admin.
 	All commands typed in PowerShel or CMD are logged and saved under \\SERVER\SHARE\Logs\Security-Tool ## Change this in [Security-Tool.ps1]
-You can also open a file from the Options groupbox, this is also logged(Who opened, what, where, when).
+	You can also open a file from the Options groupbox, this is also logged(Who opened, what, where, when).
