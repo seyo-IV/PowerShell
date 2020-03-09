@@ -3,14 +3,14 @@ $InitialName = $env:USERNAME
 $LogDate = Get-Date -format ddMMyyyy
 
 try{Import-Module ActiveDirectory}
-catch{[System.Windows.Forms.MessageBox]::Show('Modul couldntbe loaded', 'Error', 'Ok', 'Error')
+catch{[System.Windows.Forms.MessageBox]::Show('Module couldnt be loaded', 'Error', 'Ok', 'Error')
 try{$Dir = (get-item $PSScriptRoot).parent.FullName;  ; Import-Module "$Dir\0_data\ActiveDirectory" -Force}
 catch{[System.Windows.Forms.MessageBox]::Show('Local module couldnt be loaded', 'Error', 'Ok', 'Error')
 }
 }
 
 try{Import-Module PSReadline}
-catch{[System.Windows.Forms.MessageBox]::Show('Modul couldntbe loaded', 'Error', 'Ok', 'Error')
+catch{[System.Windows.Forms.MessageBox]::Show('Module couldnt be loaded', 'Error', 'Ok', 'Error')
 try{$Dir = (get-item $PSScriptRoot).parent.FullName;  ; Import-Module "$Dir\0_data\PSReadline" -Force}
 catch{[System.Windows.Forms.MessageBox]::Show('Local module couldnt be loaded', 'Error', 'Ok', 'Error')
 }
