@@ -10,7 +10,7 @@ I recomend to compile an exe with ps2exe https://gallery.technet.microsoft.com/s
 3) Now run (as Administrator) Setup_Enviroment.lnk, this will open a new Shell.
 	Setting up chocolatey and installing the required module activates the ability of CMD to log commands.
 4) After installing Choco and setting up CMD you can execute [Security-Tool.exe] Password: Standard
-#### PS: All Values that has to be changed so the script works are marked with "## Change it!!" ####
+#### PS: All Values that has to be changed so the script works, are marked with "## Change it!!" ####
 ### Uninstall ###
 0) Run both as admin!
 1) Run [Remove-Tools.lnk] to remove the tools that were installed to work with the Security-Tool(Chocolatey, clink).
