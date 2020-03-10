@@ -341,7 +341,7 @@ $ReqForm.ShowDialog()
     {
     
     Set-Variable -Name LoginComplete -Value $true -Scope global
-    $ReqForm.Tag = $null; $ReqForm.Close()
+    #$ReqForm.Tag = $null; $ReqForm.Close()
 
     }
 ############################# Form ####################################
