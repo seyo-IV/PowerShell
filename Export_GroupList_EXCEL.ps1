@@ -78,7 +78,7 @@ param(
         
     }
 
-$xlfile = "\\SERVER\Logs\Export\$LogName.xlsx"
+$xlfile = "$PSScriptRoot\$LogName.xlsx"
 Remove-Item $xlfile -ErrorAction SilentlyContinue
 
 # 
