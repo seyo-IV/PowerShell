@@ -20,10 +20,17 @@
 # Awesome PowerShell Profile
 Obivously you would need an AD-Module for ufind and gfind.
 The profile has some iteresting buildin functions.
+
   ufind = Find AD-User based on Name and other criterias.
+  
   gfind = Find AD-Group based on SamAccountName.
+  
   sfind = Find string in file.
+  
   sinfo = Get server info.
+  
   perm = Get NTFS Permissions on a UNC path.
+  
   pwgen = Generate a password.
+ 
   
