@@ -190,7 +190,7 @@ $i++
 
 
 
-$xlfile = "\\SERVER\Logs\Effective_Permissions_$Pathfinder.xlsx"
+$xlfile = "$PSScriptRoot\Effective_Permissions_$Pathfinder.xlsx"
 Remove-Item $xlfile -ErrorAction SilentlyContinue
 
 #
