@@ -57,7 +57,7 @@ Function Get-RandomAlphanumericString
 
 If ($passwd -eq "1")
 	{
-	Write-Host "Generated password: "(Get-RandomAlphanumericString)
+	Write-Host "Generated password: "(Get-RandomAlphanumericString -length 8)
 	}
 If ($passwd -eq "2")
 	{
