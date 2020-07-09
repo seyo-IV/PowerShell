@@ -78,4 +78,4 @@ param(
 
 
 
-    $statuses | Export-Csv \\SERVER\$logname.csv -NoTypeInformation -Delimiter ';' -Encoding UTF8
+    $statuses | Export-Csv $PSScriptRoot\$logname.csv -NoTypeInformation -Delimiter ';' -Encoding UTF8
