@@ -30,7 +30,7 @@ Get-ADGroup -Filter "SamAccountName -like '*$find*'" -Properties * | Sort-Object
 
 Set-Alias -Name 'gfind' -Value 'gfind-PowerShell'
 
-### Passwort-Generator
+### Passwort-Generator | Original Script https://gist.github.com/marcgeld/4891bbb6e72d7fdb577920a6420c1dfb#file-psrandomalphanumeric-ps1
 Function pwgenerator-PowerShell {
 $passwd = Read-Host "Options Password lenght`
 	[1] = Lenght 08
@@ -46,13 +46,10 @@ Function Get-RandomAlphanumericString
 {
 	
 	[CmdletBinding()]
-	Param (
-        [int] $length = 8
-	)
+	Param ([int] $length = 8)
 
 	Begin{
 	}
-
 	Process{
         Write-Output ( -join ((0x30..0x39) + ( 0x41..0x5A) + ( 0x61..0x7A) | Get-Random -Count $length | % {[char]$_}) )
 	}	
@@ -60,15 +57,15 @@ Function Get-RandomAlphanumericString
 
 If ($passwd -eq "1")
 	{
-	Write-Host "Generated password: "(Get-RandomAlphanumericString | Tee-Object -variable teeTime )
+	Write-Host "Generated password: "(Get-RandomAlphanumericString)
 	}
 If ($passwd -eq "2")
 	{
-	Write-Host "Generated password: "(Get-RandomAlphanumericString -length 16 | Tee-Object -variable teeTime )
+	Write-Host "Generated password: "(Get-RandomAlphanumericString -length 16)
 	}
 If ($passwd -eq "3")
 	{
-	Write-Host "Generated password: "(Get-RandomAlphanumericString -length 24 | Tee-Object -variable teeTime )
+	Write-Host "Generated password: "(Get-RandomAlphanumericString -length 24 )
 	}
 }
 
