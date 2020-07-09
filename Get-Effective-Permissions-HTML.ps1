@@ -53,7 +53,7 @@ $ErrorActionPreference 	= "SilentlyContinue"
 $plist                 	= @()
 $pathfinder		= $PPath -split "\\"
 $pathfinder 		= $pathfinder | Select-Object -Last 1
-$PPath                  = "\\SERVER\SHARE\Logs\"
+$PPath                  = $PSScriptRoot
 $file                   = $PPath + "Effective_Permissions_" + $Pathfinder + ".html"
 Write-Progress -Activity “Scanning Directory” -Status “Scanning” -PercentComplete 50
 try
