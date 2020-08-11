@@ -139,8 +139,8 @@ $OSTotalVisibleMemory = [math]::round(($OSInfo.TotalVisibleMemorySize  / 1MB), 2
 $PhysicalMemory = Get-WmiObject -ComputerName $server CIM_PhysicalMemory | Measure-Object -Property capacity -Sum | % {[math]::round(($_.sum / 1GB),2)} 
 $infoObject = New-Object PSObject 
 #The following add data to the infoObjects. 
-Add-Member -inputObject $infoObject -memberType NoteProperty -name "ServerName" -value $CPUInfo.SystemName 
-Add-Member -inputObject $infoObject -memberType NoteProperty -name "IPv4" -value $IPv4
+Add-Member -inputObject $infoObject -memberType NoteProperty -name "ServerName" -value $CPUInfo.SystemName[0]
+Add-Member -inputObject $infoObject -memberType NoteProperty -name "IPv4" -value $IPv4[0]
 Add-Member -inputObject $infoObject -memberType NoteProperty -name "CPU_Name" -value $CPUInfo.Name 
 Add-Member -inputObject $infoObject -memberType NoteProperty -name "CPU_Description" -value $CPUInfo.Description 
 Add-Member -inputObject $infoObject -memberType NoteProperty -name "CPU_Manufacturer" -value $CPUInfo.Manufacturer 
