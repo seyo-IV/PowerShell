@@ -25,7 +25,7 @@ The profile has some iteresting buildin functions. To use the Profile rename Awe
   
   gfind = Find AD-Group based on SamAccountName.
   
-  sfind = Find string in file.
+  sfind = Find string in files in a directory.
   
   sinfo = Get server info.
   
