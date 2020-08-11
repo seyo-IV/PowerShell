@@ -33,4 +33,7 @@ The profile has some iteresting buildin functions. To use the Profile rename Awe
   
   pwgen = Generate a password.
  
-  
+  # Tip #
+Open the desired script, then choose raw and follow the steps.
+
+To download only one script and not the whole repo use [wget -O somefile.ps1 -uri https://raw.githubusercontent.com/seyo-IV/Powershell/master/Get-ADGroup-Member-CSV.ps1]
