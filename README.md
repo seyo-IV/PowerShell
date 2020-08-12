@@ -19,7 +19,8 @@
 
 # Awesome PowerShell Profile
 Obivously you would need an AD-Module for ufind and gfind.
-The profile has some iteresting buildin functions. To use the Profile rename Awesome_Microsoft.PowerShell_profile.ps1 to Microsoft.PowerShell_profile.ps1 and place it under [%userprofile%\documents\WindowsPowerShell\].
+
+The profile has some iteresting buildin functions and I think every admin should have them in his belt. To use the Profile rename Awesome_Microsoft.PowerShell_profile.ps1 to Microsoft.PowerShell_profile.ps1 and place it under [%userprofile%\documents\WindowsPowerShell\].
 
   ufind = Find AD-User based on Name and other criterias.
   
