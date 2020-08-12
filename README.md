@@ -1,6 +1,6 @@
 
-# Get-Effective-Permissions-HTML/EXCEL
-  To use Get-Effective-Permissions-HTML u need to alter Local_Group_Prefix(If you are using local and global groups from Mictosoft best practice) to suit your company standards. The module Active Direcotry and NTFSSecurity is also required.
+# Get-Effective-Permissions-EXCEL
+  To use Get-Effective-Permissions-EXCEL u need to alter Local_Group_Prefix(If you are using local and global groups from Mictosoft best practice) to suit your company standards. The module Active Direcotry and NTFSSecurity is also required.
 
 # GUI
   I do recomend to start the scripts with a shortcut with the following content in Target: [%windir%\System32\WindowsPowerShell\v1.0\powershell.exe - windowstyle hidden -Noninteractive -ExecutionPolicy Bypass –Noprofile -file "\\SERVER\PATH\TO\SCRIPT"]
