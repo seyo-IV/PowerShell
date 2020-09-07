@@ -87,27 +87,22 @@ Write-Host "[INFO]`t  Already connected to VIServer." -ForegroundColor Cyan
     }
 Write-Host "[INFO]`t  starting export." -ForegroundColor Cyan
 ProcessingAnimation {sleep -sec 4}
-$report = @()
-$VMs = Get-VM
-foreach($vm in $VMs.Name)
-    {
-    Write-Progress -Activity "Collecting data." -status "Scanning VM $VM" -percentComplete ($i / $VMs.count*100)
-    $VMData = Get-VM $vm
-    $VMIP = $VMData.guest.IPAddress[0]
-    $VMIP = [IPAddress]$VMIP
-    $data = New-Object PSCustomObject -Property @{
-        Name = $VMData.Name;
-        State = $VMData.PowerState
-        OS = $VMData.ExtensionData.Guest.GuestFullName;
-        IPv4 = $VMIP;
-        Cores = $VMData.NumCpu;
-        RAM = ("$([math]::Round($VMData.MemoryMB)) MB");
-        Space_Avaliable =  ("$([math]::Round($VMData.ProvisionedSpaceGB)) GB");
-        Space_Used =  ("$([math]::Round($VMData.UsedSpaceGB)) GB");
-        }
-    $report += $data
-    $i++
-    }
+  $report = Get-View -viewtype virtualmachine -Property Name,Guest,
+  'Runtime.PowerState',
+  'Guest.GuestFullName',
+  'Guest.IpAddress',
+  'Config.Hardware.NumCPU',
+  'Config.Hardware.MemoryMB',
+  'Summary.Storage.Committed',
+  'Summary.Storage.Uncommitted' |
+      Select-Object Name,
+          @{ n = 'State'; e = { $PSItem.Runtime.PowerState }},
+          @{ n = 'OS'; e = { $PSItem.Guest.GuestFullName }},
+          @{ n = 'IPV4'; e = { $PSItem.Guest.IpAddress }},
+          @{ n = 'Cores'; e = { $PSItem.Config.Hardware.NumCPU }},
+          @{ n = 'RAM'; e = { '{0:N0} GB' -f ($PSItem.Config.Hardware.MemoryMB/1024) }},
+          @{ n = 'Space_Avaliable'; e = { '{0:N0} GB' -f  (($PSItem.Summary.Storage.Committed + $PSItem.Summary.Storage.Uncommitted)/1gb)  }},
+          @{ n = 'Space_Used'; e = { '{0:N0} GB' -f  ($PSItem.Summary.Storage.Committed/1gb)  }}
     $xlfile = "C:\Users\$user\Documents\VMWareReport_$($VIS)_$date.xlsx"
     $report | select-Object Name, State, OS, IPv4, Cores, RAM, Space_Avaliable, Space_Used | Export-Excel $xlfile -AutoSize -StartRow 1 -TableName VMWare
 
