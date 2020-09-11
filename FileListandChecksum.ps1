@@ -8,7 +8,7 @@ param(
 if(Test-Path $Path)
 {
 	$Alldata = @()
-	$Files = Get-ChildItem $Path -Recurse
+	$Files = Get-ChildItem $Path -Recurse -File
 	foreach($File in $Files)
 	{
 		$hash = Get-FileHash -Path $File.FullName -Algorithm SHA256
