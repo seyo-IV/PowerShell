@@ -3,7 +3,7 @@ param(
 	[Parameter(Mandatory=$True,
 	ValueFromPipeline=$True,
 	ValueFromPipelineByPropertyName=$True)]
-	[string]$Path
+	[string]$Path #Path must be a directory!
     )
 if(Test-Path $Path)
 {
